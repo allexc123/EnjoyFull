@@ -1,0 +1,12 @@
+.DS_Store
+.vs
+*.csproj
+*.sln
+/Assets/StreamingAssets/
+/Assets/StreamingAssets.meta
+/Temp
+obj/
+Library/
+Logs/
+
+
