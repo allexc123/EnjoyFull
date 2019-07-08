@@ -5,6 +5,7 @@ using Loxodon.Framework.Interactivity;
 using Loxodon.Framework.Messaging;
 using Loxodon.Framework.ViewModels;
 using Loxodon.Log;
+using LX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ public class StartupViewModel : ViewModelBase
     private ProgressBar progressBar = new ProgressBar();
     private SimpleCommand command;
 
+    private InteractionRequest<ToastNotification> toastRequest;
+
     private InteractionRequest dismissRequest;
 
     public StartupViewModel() : this(null)
@@ -26,6 +29,9 @@ public class StartupViewModel : ViewModelBase
 
     public StartupViewModel(IMessenger messenger) : base(messenger)
     {
+
+        this.toastRequest = new InteractionRequest<ToastNotification>(this);
+
         ApplicationContext context = Context.GetApplicationContext();
 
         this.dismissRequest = new InteractionRequest(this);
@@ -33,7 +39,9 @@ public class StartupViewModel : ViewModelBase
 
         this.command = new SimpleCommand(()=> {
             this.command.Enabled = false;
-            dismissRequest.Raise();
+            //dismissRequest.Raise();
+            ToastNotification notification = new ToastNotification("网络真正连接", 2f);
+            this.toastRequest.Raise(notification);
         });
 
     }

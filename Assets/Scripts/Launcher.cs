@@ -3,6 +3,7 @@ using Loxodon.Framework.Bundles;
 using Loxodon.Framework.Contexts;
 using Loxodon.Framework.Services;
 using Loxodon.Framework.Views;
+using Loxodon.Framework.Views.InteractionActions;
 using Loxodon.Log;
 using System;
 using System.Collections;
@@ -37,19 +38,24 @@ namespace LX
             /* Initialize the ui view locator and register UIViewLocator */
             container.Register<IUIViewLocator>(new ResourcesViewLocator());
 
-
+            /*初始化网络连接*/
+            //ISession session = new Session();
+            //session.Start();
+            //container.Register<ISession>(session);
 
 
         }
         IEnumerator Start()
         {
+
+
             /* Create a window container */
             WindowContainer winContainer = WindowContainer.Create("MAIN");
 
             yield return null;
 
             IUIViewLocator locator = ApplicationContext.GetApplicationContext().GetService<IUIViewLocator>();
-            StartupWindow window = locator.LoadWindow<StartupWindow>(winContainer, "Bundles/UI/Startup.prefab");
+            StartupWindow window = locator.LoadWindow<StartupWindow>(winContainer, "UI/Startup.prefab");
             window.Create();
             ITransition transition = window.Show().OnStateChanged((w, state) =>
             {
@@ -58,8 +64,10 @@ namespace LX
 
             yield return transition.WaitForDone();
 
-            log.Debug("---AAAAA");
 
+            //ApplicationContext context = ApplicationContext.GetApplicationContext();
+            //ISession session = context.GetService<ISession>();
+            //session.Send(10001, -1, new Login() { DriveId = "default" });
         }
 
         IResources CreateResources()
@@ -107,6 +115,13 @@ namespace LX
       
             }
             return resources;
+        }
+
+        private void Update()
+        {
+            //ApplicationContext context = ApplicationContext.GetApplicationContext();
+            //ISession session = context.GetService<ISession>();
+            //session.Update();
         }
     }
 

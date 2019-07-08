@@ -35,7 +35,7 @@ public class ResourcesViewLocator : UIViewLocatorBase
 
     public override T LoadView<T>(string name)
     {
-        //name = Normalize(name);
+        name = Normalize(name);
         WeakReference weakRef;
         GameObject viewTemplateGo = null;
         try
@@ -59,16 +59,16 @@ public class ResourcesViewLocator : UIViewLocatorBase
 
         if (viewTemplateGo == null)
         {
-            ApplicationContext context = Context.GetApplicationContext();
-            IResources resources = context.GetService<IResources>();
+            //ApplicationContext context = Context.GetApplicationContext();
+            //IResources resources = context.GetService<IResources>();
 
-            IProgressResult<float, GameObject> result = resources.LoadAssetAsync<GameObject>(name);
-            while (!result.IsDone)
-            {
-                continue;
-            }
-            viewTemplateGo = result.Result;
-            //viewTemplateGo = Resources.Load<GameObject>(name);
+            //IProgressResult<float, GameObject> result = resources.LoadAssetAsync<GameObject>(name);
+            //while (!result.IsDone)
+            //{
+            //    continue;
+            //}
+            //viewTemplateGo = result.Result;
+            viewTemplateGo = Resources.Load<GameObject>(name);
             if (viewTemplateGo != null)
             {
                 viewTemplateGo.SetActive(false);
