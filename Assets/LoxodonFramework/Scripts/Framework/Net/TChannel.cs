@@ -1,4 +1,5 @@
-﻿using Loxodon.Log;
+﻿using Loxodon.Framework.Messaging;
+using Loxodon.Log;
 using Microsoft.IO;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ class TChannel : AbstractChannel
     private readonly byte[] IdCache;
     private readonly byte[] packetSizeCache;
 
-    public TChannel(string address)
+    public TChannel(string host, int port)
     {
 
         this.opcodeCache = new byte[Packet.OpcodeLength];
@@ -53,10 +54,10 @@ class TChannel : AbstractChannel
         this.innArgs.Completed += this.OnComplete;
         this.outArgs.Completed += this.OnComplete;
 
-        int index = address.LastIndexOf(':');
-        string host = address.Substring(0, index);
-        string p = address.Substring(index + 1);
-        int port = int.Parse(p);
+        //int index = address.LastIndexOf(':');
+        //string host = address.Substring(0, index);
+        //string p = address.Substring(index + 1);
+        //int port = int.Parse(p);
 
         this.Address = new IPEndPoint(IPAddress.Parse(host), port);
 
@@ -106,6 +107,8 @@ class TChannel : AbstractChannel
         }
     }
 
+    public override bool IsConnect { get { return this.isConnected; } }
+
     public override void Send(int opcode, long pid, object message)
     {
         MemoryStream stream = this.Stream;
@@ -136,6 +139,8 @@ class TChannel : AbstractChannel
 
     public override void Start()
     {
+        Messenger messenger = Messenger.Default;
+        messenger.Publish("ConnectBegin", "开始连接");
         if (!this.isConnected)
         {
             this.ConnectAsync(this.Address);
@@ -151,6 +156,7 @@ class TChannel : AbstractChannel
 
     public void ConnectAsync(IPEndPoint iPEndPoint)
     {
+        log.Debug("----"+ isConnected);
         this.outArgs.RemoteEndPoint = iPEndPoint;
         if (this.socket.ConnectAsync(this.outArgs))
         {
@@ -169,12 +175,16 @@ class TChannel : AbstractChannel
 
         if (e.SocketError != SocketError.Success)
         {
+
             this.OnError((int) e.SocketError);
             return;
         }
         e.RemoteEndPoint = null;
         this.isConnected = true;
 
+        log.Debug("连接成功");
+        Messenger messenger = Messenger.Default;
+        messenger.Publish("ConnectComplet", "连接成功");
         this.Start();
     }
 

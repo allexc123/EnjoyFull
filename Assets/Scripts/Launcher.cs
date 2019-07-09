@@ -1,6 +1,7 @@
 ﻿using Loxodon.Framework.Binding;
 using Loxodon.Framework.Bundles;
 using Loxodon.Framework.Contexts;
+using Loxodon.Framework.Messaging;
 using Loxodon.Framework.Services;
 using Loxodon.Framework.Views;
 using Loxodon.Framework.Views.InteractionActions;
@@ -17,6 +18,8 @@ namespace LX
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Launcher));
 
+         private List<Loading> list = new List<Loading>();
+
         private void Awake()
         {
             GlobalWindowManager windowManager = FindObjectOfType<GlobalWindowManager>();
@@ -25,6 +28,8 @@ namespace LX
                 throw new NotFoundException("Can't find the GlobalWindowManager.");
             }
 
+            //DontDestroyOnLoad(this);
+
             ApplicationContext context = ApplicationContext.GetApplicationContext();
             IServiceContainer container = context.GetContainer();
 
@@ -32,16 +37,31 @@ namespace LX
             BindingServiceBundle bundle = new BindingServiceBundle(context.GetContainer());
             bundle.Start();
 
-            IResources resources = CreateResources();
-            container.Register<IResources>(resources);
-
             /* Initialize the ui view locator and register UIViewLocator */
             container.Register<IUIViewLocator>(new ResourcesViewLocator());
 
+            Messenger messenger = Messenger.Default;
+            messenger.Subscribe("ConnectBegin", (string message) => {
+                log.Debug("AAA ConnectBegin");
+                Loading loading = Loading.Show(true);
+
+                if (loading != null)
+                    list.Insert(0, loading);
+            });
+
+            messenger.Subscribe("ConnectComplet", (string message) => {
+                if (list.Count <= 0)
+                    return;
+
+                Loading loading = list[0];
+                list.RemoveAt(0);
+                loading.Dispose();
+            });
+
             /*初始化网络连接*/
-            //ISession session = new Session();
-            //session.Start();
-            //container.Register<ISession>(session);
+            ISession session = new Session();
+            container.Register<ISession>(session);
+            //session.Connect("127.0.0.1", 10001);
 
 
         }
@@ -68,60 +88,17 @@ namespace LX
             //ApplicationContext context = ApplicationContext.GetApplicationContext();
             //ISession session = context.GetService<ISession>();
             //session.Send(10001, -1, new Login() { DriveId = "default" });
-        }
 
-        IResources CreateResources()
-        {
-            IResources resources = null;
-#if UNITY_EDITOR
-            if (SimulationSetting.IsSimulationMode)
-            {
-                Debug.Log("Use SimulationResources. Run In Editor");
-
-                /* Create a PathInfoParser. */
-                //IPathInfoParser pathInfoParser = new SimplePathInfoParser("@");
-                IPathInfoParser pathInfoParser = new SimulationAutoMappingPathInfoParser();
-
-                /* Create a BundleManager */
-                IBundleManager manager = new SimulationBundleManager();
-
-                /* Create a BundleResources */
-                resources = new SimulationResources(pathInfoParser, manager);
-            }
-            else
-#endif
-            {
-
-                /* Create a BundleManifestLoader. */
-                IBundleManifestLoader manifestLoader = new BundleManifestLoader();
-
-                /* Loads BundleManifest. */
-                BundleManifest manifest = manifestLoader.Load(BundleUtil.GetStorableDirectory() + BundleSetting.ManifestFilename);
-
-                //manifest.ActiveVariants = new string[] { "", "sd" };
-                //manifest.ActiveVariants = new string[] { "", "hd" };
-
-                /* Create a PathInfoParser. */
-                IPathInfoParser pathInfoParser = new AutoMappingPathInfoParser(manifest);
-
-                /* Use a custom BundleLoaderBuilder */
-                ILoaderBuilder builder = new CustomBundleLoaderBuilder(new Uri(BundleUtil.GetReadOnlyDirectory()), false);
-
-                /* Create a BundleManager */
-                IBundleManager manager = new BundleManager(manifest, builder);
-
-                /* Create a BundleResources */
-                resources = new BundleResources(pathInfoParser, manager);
-      
-            }
-            return resources;
+            ApplicationContext context = ApplicationContext.GetApplicationContext();
+            ISession session = context.GetService<ISession>();
+            //session.Connect("127.0.0.1", 10001);
         }
 
         private void Update()
         {
-            //ApplicationContext context = ApplicationContext.GetApplicationContext();
-            //ISession session = context.GetService<ISession>();
-            //session.Update();
+            ApplicationContext context = ApplicationContext.GetApplicationContext();
+            ISession session = context.GetService<ISession>();
+            session.Update();
         }
     }
 

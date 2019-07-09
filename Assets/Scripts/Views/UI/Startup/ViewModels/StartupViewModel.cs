@@ -40,8 +40,8 @@ public class StartupViewModel : ViewModelBase
         this.command = new SimpleCommand(()=> {
             this.command.Enabled = false;
             //dismissRequest.Raise();
-            ToastNotification notification = new ToastNotification("网络真正连接", 2f);
-            this.toastRequest.Raise(notification);
+            ISession session = context.GetService<ISession>();
+            //session.Connect("127.0.0.1", 10001);
         });
 
     }

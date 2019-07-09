@@ -15,11 +15,13 @@ public abstract class AbstractChannel : IDisposable
 
     public abstract MemoryStream Stream { get; }
 
+    public abstract bool IsConnect { get; }
+
     public int Error { get; set; }
 
-    private Action<AbstractChannel, int> errorCallback;
+    private Action<int> errorCallback;
 
-    public event Action<AbstractChannel, int> ErrorCallback
+    public event Action<int> ErrorCallback
     {
         add
         {
@@ -54,7 +56,7 @@ public abstract class AbstractChannel : IDisposable
     protected void OnError(int e)
     {
         this.Error = e;
-        this.errorCallback?.Invoke(this, e);
+        this.errorCallback?.Invoke(e);
     }
 
     

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 public interface ISession : IDisposable
 {
-    void Start();
+    void Connect(string address, int port);
 
-    void Send(int opcode, long pid, object message);
+    void Send(int opcode, object message);
 
     void OnRead(MemoryStream memoryStream);
 
