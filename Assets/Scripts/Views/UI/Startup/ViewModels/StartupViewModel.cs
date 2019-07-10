@@ -22,6 +22,7 @@ public class StartupViewModel : ViewModelBase
     private InteractionRequest<ToastNotification> toastRequest;
 
     private InteractionRequest dismissRequest;
+    private InteractionRequest<WheelViewModel> wheelRequest;
 
     public StartupViewModel() : this(null)
     {
@@ -35,13 +36,17 @@ public class StartupViewModel : ViewModelBase
         ApplicationContext context = Context.GetApplicationContext();
 
         this.dismissRequest = new InteractionRequest(this);
+        this.wheelRequest = new InteractionRequest<WheelViewModel>(this);
 
+        var wheelViewModel = new WheelViewModel();
 
         this.command = new SimpleCommand(()=> {
             this.command.Enabled = false;
             //dismissRequest.Raise();
             ISession session = context.GetService<ISession>();
             //session.Connect("127.0.0.1", 10001);
+
+            this.wheelRequest.Raise(wheelViewModel);
         });
 
     }
@@ -53,6 +58,10 @@ public class StartupViewModel : ViewModelBase
     public IInteractionRequest DismissRequest
     {
         get { return this.dismissRequest; }
+    }
+    public InteractionRequest<WheelViewModel> WheelRequest
+    {
+        get { return this.wheelRequest; }
     }
 
 

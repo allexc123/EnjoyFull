@@ -71,7 +71,6 @@ namespace LX
 
             /* Create a window container */
             WindowContainer winContainer = WindowContainer.Create("MAIN");
-
             yield return null;
 
             IUIViewLocator locator = ApplicationContext.GetApplicationContext().GetService<IUIViewLocator>();

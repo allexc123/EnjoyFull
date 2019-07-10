@@ -1,5 +1,6 @@
 ﻿using Loxodon.Framework.Binding;
 using Loxodon.Framework.Binding.Builder;
+using Loxodon.Framework.Contexts;
 using Loxodon.Framework.Interactivity;
 using Loxodon.Framework.Views;
 using Loxodon.Log;
@@ -26,7 +27,7 @@ public class StartupWindow : Window
 
         /* databinding, Bound to the ViewModel. */
         BindingSet<StartupWindow, StartupViewModel> bindingSet = this.CreateBindingSet(viewModel);
-
+        bindingSet.Bind().For(v => v.OnOpenWheelWindow(null, null)).To(vm => vm.WheelRequest);
         bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
 
 
@@ -53,5 +54,18 @@ public class StartupWindow : Window
     public void OnDismissRequest(object sender, InteractionEventArgs args)
     {
         this.DoDismiss();
+    }
+
+    protected void OnOpenWheelWindow(object sender, InteractionEventArgs args)
+    {
+        IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
+
+        WheelWindow wheelWindow = viewLocator.LoadWindow<WheelWindow>(this.WindowManager, "UI/Wheel");
+        var wheelViewModel = args.Context;
+        wheelWindow.SetDataContext(wheelViewModel);
+        wheelWindow.Create();
+        wheelWindow.Show();
+
+       
     }
 }
