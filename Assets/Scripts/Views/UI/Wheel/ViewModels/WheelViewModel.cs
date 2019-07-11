@@ -1,4 +1,6 @@
-﻿using Loxodon.Framework.Observables;
+﻿
+
+using Loxodon.Framework.Observables;
 using Loxodon.Framework.ViewModels;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +17,11 @@ public class WheelViewModel : ViewModelBase
 
     public void AddItem()
     {
-        this.items.Add(new ItemViewModel() { Icon = "aaa" });
+        //this.items.Add(new ItemViewModel() { Icon = "aaa" });
+
+
+        Loxodon.Framework.Messaging.Messenger messenger = Loxodon.Framework.Messaging.Messenger.Default;
+        messenger.Publish("ConnectBegin", "aaaaaa");
     }
 
 }

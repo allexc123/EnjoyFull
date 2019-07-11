@@ -47,6 +47,7 @@ public class StartupViewModel : ViewModelBase
             //session.Connect("127.0.0.1", 10001);
 
             this.wheelRequest.Raise(wheelViewModel);
+            //this.dismissRequest.Raise();
         });
 
     }
