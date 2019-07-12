@@ -1,4 +1,5 @@
-﻿using Loxodon.Framework.Execution;
+﻿using Loxodon.Framework.Contexts;
+using Loxodon.Framework.Execution;
 using Loxodon.Log;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,9 @@ public class Session : ISession
 
     public void OnRead(MemoryStream memoryStream)
     {
-        
+        ApplicationContext context = ApplicationContext.GetApplicationContext();
+        IMessageDispatcher dispatcher = context.GetService<IMessageDispatcher>();
+        dispatcher.Publish(memoryStream);
     }
 
     public void Send(int opcode, object message)

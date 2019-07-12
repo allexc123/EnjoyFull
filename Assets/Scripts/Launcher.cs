@@ -40,23 +40,9 @@ namespace LX
             /* Initialize the ui view locator and register UIViewLocator */
             container.Register<IUIViewLocator>(new ResourcesViewLocator());
 
-            Messenger messenger = Messenger.Default;
-            messenger.Subscribe("ConnectBegin", (string message) => {
-                log.Debug("AAA ConnectBegin");
-                Loading loading = Loading.Show(true);
-
-                if (loading != null)
-                    list.Insert(0, loading);
-            });
-
-            messenger.Subscribe("ConnectComplet", (string message) => {
-                if (list.Count <= 0)
-                    return;
-
-                Loading loading = list[0];
-                list.RemoveAt(0);
-                loading.Dispose();
-            });
+            /*网络消息分析器注册*/
+            IMessageDispatcher messageDispatcher = new MessageDispatcher();
+            container.Register<IMessageDispatcher>(messageDispatcher);
 
             /*初始化网络连接*/
             ISession session = new Session();
@@ -90,7 +76,7 @@ namespace LX
 
             ApplicationContext context = ApplicationContext.GetApplicationContext();
             ISession session = context.GetService<ISession>();
-            //session.Connect("127.0.0.1", 10001);
+            session.Connect("127.0.0.1", 10001);
         }
 
         private void Update()
