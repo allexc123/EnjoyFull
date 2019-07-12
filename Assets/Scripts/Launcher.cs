@@ -59,7 +59,7 @@ namespace LX
             WindowContainer winContainer = WindowContainer.Create("MAIN");
             yield return null;
 
-            IUIViewLocator locator = ApplicationContext.GetApplicationContext().GetService<IUIViewLocator>();
+            IUIViewLocator locator = Context.GetApplicationContext().GetService<IUIViewLocator>();
             StartupWindow window = locator.LoadWindow<StartupWindow>(winContainer, "UI/Startup.prefab");
             window.Create();
             ITransition transition = window.Show().OnStateChanged((w, state) =>
@@ -74,7 +74,7 @@ namespace LX
             //ISession session = context.GetService<ISession>();
             //session.Send(10001, -1, new Login() { DriveId = "default" });
 
-            ApplicationContext context = ApplicationContext.GetApplicationContext();
+            ApplicationContext context = Context.GetApplicationContext();
             ISession session = context.GetService<ISession>();
             session.Connect("127.0.0.1", 10001);
         }
