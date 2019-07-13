@@ -60,12 +60,19 @@ public class StartupWindow : Window
     {
         IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
 
-        WheelWindow wheelWindow = viewLocator.LoadWindow<WheelWindow>(this.WindowManager, "UI/Wheel");
-        var wheelViewModel = args.Context;
-        wheelWindow.SetDataContext(wheelViewModel);
-        wheelWindow.Create();
-        wheelWindow.Show();
+        //WheelWindow wheelWindow = viewLocator.LoadWindow<WheelWindow>(this.WindowManager, "UI/Wheel");
+        //var wheelViewModel = args.Context;
+        //wheelWindow.SetDataContext(wheelViewModel);
+        //wheelWindow.Create();
+        //wheelWindow.Show();
 
-       
+        CardDrawWindow cardDrawWindow = viewLocator.LoadWindow<CardDrawWindow>(this.WindowManager, "UI/CardDraw");
+        var cardDrawModel = args.Context;
+        cardDrawWindow.SetDataContext(cardDrawModel);
+        cardDrawWindow.Create();
+        cardDrawWindow.Show();
+
+
+
     }
 }

@@ -22,7 +22,7 @@ public class StartupViewModel : ViewModelBase
     private InteractionRequest<ToastNotification> toastRequest;
 
     private InteractionRequest dismissRequest;
-    private InteractionRequest<WheelViewModel> wheelRequest;
+    private InteractionRequest<CardDrawViewModel> wheelRequest;
 
     public StartupViewModel() : this(null)
     {
@@ -36,9 +36,9 @@ public class StartupViewModel : ViewModelBase
         ApplicationContext context = Context.GetApplicationContext();
 
         this.dismissRequest = new InteractionRequest(this);
-        this.wheelRequest = new InteractionRequest<WheelViewModel>(this);
+        this.wheelRequest = new InteractionRequest<CardDrawViewModel>(this);
 
-        var wheelViewModel = new WheelViewModel();
+        var cardDrawViewModel = new CardDrawViewModel();
 
         this.command = new SimpleCommand(()=> {
             this.command.Enabled = false;
@@ -46,7 +46,7 @@ public class StartupViewModel : ViewModelBase
             ISession session = context.GetService<ISession>();
             //session.Connect("127.0.0.1", 10001);
 
-            this.wheelRequest.Raise(wheelViewModel);
+            this.wheelRequest.Raise(cardDrawViewModel);
             //this.dismissRequest.Raise();
         });
 
@@ -60,7 +60,7 @@ public class StartupViewModel : ViewModelBase
     {
         get { return this.dismissRequest; }
     }
-    public InteractionRequest<WheelViewModel> WheelRequest
+    public InteractionRequest<CardDrawViewModel> WheelRequest
     {
         get { return this.wheelRequest; }
     }
