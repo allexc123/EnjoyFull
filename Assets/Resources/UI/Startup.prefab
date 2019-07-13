@@ -464,7 +464,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8211502134962653226
 RectTransform:
   m_ObjectHideFlags: 0
@@ -574,7 +574,6 @@ MonoBehaviour:
   progressBarText: {fileID: 8211502133313398525}
   progressBarSlider: {fileID: 8211502133564285607}
   tipText: {fileID: 8211502134234676465}
-  button: {fileID: 0}
 --- !u!225 &3876332998774268540
 CanvasGroup:
   m_ObjectHideFlags: 0

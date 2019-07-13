@@ -5,7 +5,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using DG.Tweening;
 
+// 需要 EventTrigger 脚本的支援
+[RequireComponent(typeof(EventTrigger))]
 public class CardView : UIView
 {
     private Quaternion T;
@@ -23,13 +27,54 @@ public class CardView : UIView
         bindingSet.Build();
 
         //frontImage.transform.rotation = Quaternion.Euler(0, 0, 0);
-        backImage.transform.rotation = Quaternion.Euler(0, 90, 0);
+        backImage.transform.localRotation = Quaternion.Euler(0, 90, 0);
+        //backImage.gameObject.SetActive(false);
+
+        //Button btn = this.GetComponent<Button>();
+        //EventTrigger trigger = this.GetComponent<EventTrigger>();
+        //EventTrigger.Entry entry = new EventTrigger.Entry();
+        //// 鼠标点击事件
+        //entry.eventID = EventTriggerType.PointerClick;
+        //// 鼠标进入事件 
+        //entry.eventID = EventTriggerType.PointerEnter;
+        //// 鼠标滑出事件 
+        //entry.eventID = EventTriggerType.PointerExit;
+
+        //entry.callback = new EventTrigger.TriggerEvent();
+
+        //entry.callback.AddListener(OnClick);
+
+        //trigger.triggers.Add(entry);
 
     }
-    public void OnClick()
+
+    void OnTweenComplete()
     {
-        InvokeRepeating("BE", 0.5f, 0.05f);
-        CancelInvoke("BD");
+        backImage.transform.DOLocalRotate(new Vector3(0, 0, 0), 2);
+        frontImage.gameObject.SetActive(false);
+        //backImage.gameObject.SetActive(true);
+    }
+
+    public void OnClick(BaseEventData pointData)
+    {
+        //InvokeRepeating("BE", 0.5f, 0.05f);
+        //CancelInvoke("BD");
+        //transform.DOScale(1.2f, 0f);
+        Tweener tweener = frontImage.transform.DOLocalRotate(new Vector3(0, 90, 0), 2);
+        tweener.OnComplete(OnTweenComplete);
+        //this.transform.DOBlendableRotateBy(new Vector3(0, 180, 0), 2f);
+        //frontImage.gameObject.SetActive(false);
+        //this.transform.DOBlendableRotateBy(new Vector3(0, 360, 0), 2f);
+    }
+
+    public void OnMouseEnter(BaseEventData pointData)
+    {
+        //Debug.Log("Button Enter. EventTrigger..");
+        transform.DOScale(1.2f, 1f);
+    }
+    public void OnMouseExit(BaseEventData pointData)
+    {
+        transform.DOScale(1f, 1f);
     }
 
     private void BE()
@@ -37,7 +82,7 @@ public class CardView : UIView
         T = Quaternion.Euler(0, 90, 0);
         V = Quaternion.Euler(0, 0, 0);
 
-        frontImage.transform.rotation = Quaternion.RotateTowards(frontImage.transform.rotation, T, 4f);
+        frontImage.transform.localRotation = Quaternion.RotateTowards(frontImage.transform.localRotation, T, 4f);
         if (frontImage.transform.eulerAngles.y > 89 && frontImage.transform.eulerAngles.y < 91)
         {
 
