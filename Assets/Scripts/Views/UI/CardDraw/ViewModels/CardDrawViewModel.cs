@@ -12,7 +12,10 @@ public class CardDrawViewModel : ViewModelBase
     {
         for (int i = 0; i < 9; i++)
         {
-            cards.Add(new CardViewModel());
+            CardViewModel cardViewModel = new CardViewModel();
+            cardViewModel.BackImage = "a0";
+            cardViewModel.FrontImage = "a1";
+            cards.Add(cardViewModel);
         }
     }
 

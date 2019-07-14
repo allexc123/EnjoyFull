@@ -1,6 +1,7 @@
 ﻿using Loxodon.Framework.Binding;
 using Loxodon.Framework.Bundles;
 using Loxodon.Framework.Contexts;
+using Loxodon.Framework.Binding.Converters;
 using Loxodon.Framework.Messaging;
 using Loxodon.Framework.Services;
 using Loxodon.Framework.Views;
@@ -11,6 +12,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.U2D;
 
 namespace LX
 {
@@ -48,6 +51,11 @@ namespace LX
             ISession session = new Session();
             container.Register<ISession>(session);
             //session.Connect("127.0.0.1", 10001);
+
+            SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Icon");
+        
+            IConverterRegistry converterRegistry = context.GetContainer().Resolve<IConverterRegistry>();
+            converterRegistry.Register("spriteConverter", new SpriteConverter(spriteAtlas));
 
 
         }

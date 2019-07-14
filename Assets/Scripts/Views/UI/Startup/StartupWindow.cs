@@ -27,7 +27,7 @@ public class StartupWindow : Window
 
         /* databinding, Bound to the ViewModel. */
         BindingSet<StartupWindow, StartupViewModel> bindingSet = this.CreateBindingSet(viewModel);
-        bindingSet.Bind().For(v => v.OnOpenWheelWindow(null, null)).To(vm => vm.WheelRequest);
+        bindingSet.Bind().For(v => v.OnOpenIdleWindow(null, null)).To(vm => vm.IdleRequest);
         bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
 
 
@@ -56,7 +56,7 @@ public class StartupWindow : Window
         this.DoDismiss();
     }
 
-    protected void OnOpenWheelWindow(object sender, InteractionEventArgs args)
+    protected void OnOpenIdleWindow(object sender, InteractionEventArgs args)
     {
         IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
 
@@ -66,13 +66,16 @@ public class StartupWindow : Window
         //wheelWindow.Create();
         //wheelWindow.Show();
 
-        CardDrawWindow cardDrawWindow = viewLocator.LoadWindow<CardDrawWindow>(this.WindowManager, "UI/CardDraw");
-        var cardDrawModel = args.Context;
-        cardDrawWindow.SetDataContext(cardDrawModel);
-        cardDrawWindow.Create();
-        cardDrawWindow.Show();
+        //CardDrawWindow cardDrawWindow = viewLocator.LoadWindow<CardDrawWindow>(this.WindowManager, "UI/CardDraw");
+        //var cardDrawModel = args.Context;
+        //cardDrawWindow.SetDataContext(cardDrawModel);
+        //cardDrawWindow.Create();
+        //cardDrawWindow.Show();
 
+        IdleWindow idleWindow = viewLocator.LoadWindow<IdleWindow>(this.WindowManager, "UI/Idle");
 
+        idleWindow.Create();
+        idleWindow.Show();
 
     }
 }
