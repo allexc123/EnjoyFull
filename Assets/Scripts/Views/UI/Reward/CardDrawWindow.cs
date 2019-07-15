@@ -17,7 +17,7 @@ public class CardDrawWindow : Window
 
     protected override void OnCreate(IBundle bundle)
     {
-        BindingSet<CardDrawWindow, CardDrawViewModel> bindingSet = this.CreateBindingSet<CardDrawWindow, CardDrawViewModel>();
+        BindingSet<CardDrawWindow, CardBagViewModel> bindingSet = this.CreateBindingSet<CardDrawWindow, CardBagViewModel>();
         bindingSet.Bind().For(v => v.Cards).To(vm => vm.Cards).OneWay();
 
         bindingSet.Build();

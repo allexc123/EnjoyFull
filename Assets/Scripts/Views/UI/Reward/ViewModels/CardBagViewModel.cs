@@ -4,11 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardDrawViewModel : ViewModelBase
+public class CardBagViewModel : ViewModelBase
 {
     private readonly ObservableList<CardViewModel> cards = new ObservableList<CardViewModel>();
 
-    public CardDrawViewModel() : base()
+    public CardBagViewModel() : base()
     {
         for (int i = 0; i < 9; i++)
         {

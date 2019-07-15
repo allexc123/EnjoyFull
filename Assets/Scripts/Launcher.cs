@@ -57,6 +57,9 @@ namespace LX
             IConverterRegistry converterRegistry = context.GetContainer().Resolve<IConverterRegistry>();
             converterRegistry.Register("spriteConverter", new SpriteConverter(spriteAtlas));
 
+            /*初始化定时器*/
+            ITask taskContext = new TaskContext();
+            container.Register<ITask>(taskContext);
 
         }
         IEnumerator Start()

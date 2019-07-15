@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Loxodon.Framework.Asynchronous;
+using Loxodon.Framework.Commands;
+using Loxodon.Framework.Contexts;
 using Loxodon.Framework.Execution;
 using Loxodon.Framework.Interactivity;
 using Loxodon.Framework.ViewModels;
@@ -15,28 +17,49 @@ public class PayModel : ViewModelBase
 
     private InteractionRequest dismissRequest;
 
-    private ThreadScheduledExecutor scheduled;
+    private InteractionRequest<CardBagViewModel> cardBagRequest;
+
+    private SimpleCommand showCardBag;
+
+    private IAsyncResult result;
 
     public PayModel() : base()
     {
 
         this.dismissRequest = new InteractionRequest(this);
 
-        scheduled = new ThreadScheduledExecutor();
-        scheduled.Start();
+        this.cardBagRequest = new InteractionRequest<CardBagViewModel>(this);
 
-        IAsyncResult result = scheduled.ScheduleAtFixedRate(() =>
+        ApplicationContext context = Context.GetApplicationContext();
+        ITask task = context.GetService<ITask>();
+
+        result = task.Scheduled.ScheduleAtFixedRate(() =>
         {
             CountDown -= 1;
             if (countDown <= 0)
             {
-                scheduled.Stop();
-                scheduled.Dispose();
-                scheduled = null;
-                this.dismissRequest.Raise();
+                ClosePay();
             }
-           
+
         }, 1000, 1000);
+
+        var cardBagModel = new CardBagViewModel();
+
+        this.showCardBag = new SimpleCommand(()=>
+        {
+            this.showCardBag.Enabled = false;
+            this.cardBagRequest.Raise(cardBagModel, vm => 
+            {
+                ClosePay();
+            });
+
+        });
+
+    }
+    private void ClosePay()
+    {
+        result.Cancel();
+        this.dismissRequest.Raise();
     }
 
     public int CountDown
@@ -48,5 +71,15 @@ public class PayModel : ViewModelBase
     public IInteractionRequest DismissRequest
     {
         get { return this.dismissRequest; }
+    }
+
+    public InteractionRequest<CardBagViewModel> CardBagRequest
+    {
+        get { return this.cardBagRequest; }
+    }
+
+    public ICommand Click
+    {
+        get { return this.showCardBag; }
     }
 }

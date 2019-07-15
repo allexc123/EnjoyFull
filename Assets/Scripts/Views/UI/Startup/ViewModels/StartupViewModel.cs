@@ -23,7 +23,7 @@ public class StartupViewModel : ViewModelBase
 
     private InteractionRequest dismissRequest;
     private InteractionRequest idleRequest;
-    //private InteractionRequest<CardDrawViewModel> wheelRequest;
+    //private InteractionRequest<CardBagViewModel> wheelRequest;
 
     public StartupViewModel() : this(null)
     {
@@ -37,9 +37,9 @@ public class StartupViewModel : ViewModelBase
         ApplicationContext context = Context.GetApplicationContext();
 
         this.dismissRequest = new InteractionRequest(this);
-        //this.wheelRequest = new InteractionRequest<CardDrawViewModel>(this);
+        //this.wheelRequest = new InteractionRequest<CardBagViewModel>(this);
 
-        //var cardDrawViewModel = new CardDrawViewModel();
+        //var cardDrawViewModel = new CardBagViewModel();
 
         this.idleRequest = new InteractionRequest(this);
 
@@ -69,7 +69,7 @@ public class StartupViewModel : ViewModelBase
         get { return this.idleRequest; }
     }
 
-    //public InteractionRequest<CardDrawViewModel> WheelRequest
+    //public InteractionRequest<CardBagViewModel> WheelRequest
     //{
     //    get { return this.wheelRequest; }
     //}
