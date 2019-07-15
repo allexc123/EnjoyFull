@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windowType: 0
+  openCardBag: {fileID: 2530820894989455307}
 --- !u!225 &2534751392040806555
 CanvasGroup:
   m_ObjectHideFlags: 0

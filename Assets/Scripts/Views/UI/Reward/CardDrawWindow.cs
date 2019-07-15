@@ -15,6 +15,8 @@ public class CardDrawWindow : Window
 
     private ObservableList<CardViewModel> cards;
 
+    private int count = 5;
+
     protected override void OnCreate(IBundle bundle)
     {
         BindingSet<CardDrawWindow, CardBagViewModel> bindingSet = this.CreateBindingSet<CardDrawWindow, CardBagViewModel>();
@@ -89,8 +91,12 @@ public class CardDrawWindow : Window
 
         cardViewGo.SetActive(true);
 
-        UIView cardView = cardViewGo.GetComponent<UIView>();
+        CardView cardView = cardViewGo.GetComponent<CardView>();
         cardView.SetDataContext(card);
+        cardView.ClickCallback(()=> {
+            count++;
+            ((CardViewModel)card).BackImage = "a" + count;
+        });
     }
 
     

@@ -51,21 +51,26 @@ public class PayWindow : Window
             var callback = args.Callback;
             var cardBagModel = args.Context;
 
-            if (callback != null)
-            {
-                EventHandler handler = null;
-                handler = (window, e) =>
-                {
-                    cardBagWindow.OnDismissed -= handler;
-                    if (callback != null)
-                        callback();
-                };
-                cardBagWindow.OnDismissed += handler;
-            }
+            //if (callback != null)
+            //{
+            //    EventHandler handler = null;
+            //    handler = (window, e) =>
+            //    {
+            //        cardBagWindow.OnDismissed -= handler;
+            //        if (callback != null)
+            //            callback();
+            //    };
+            //    cardBagWindow.OnDismissed += handler;
+            //}
 
             cardBagWindow.SetDataContext(cardBagModel);
             cardBagWindow.Create();
-            cardBagWindow.Show();
+            cardBagWindow.Show().OnFinish(()=> {
+                if (callback != null)
+                {
+                    callback();
+                }
+            });
         }
         catch (Exception e)
         {

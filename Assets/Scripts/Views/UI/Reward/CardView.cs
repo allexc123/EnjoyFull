@@ -7,16 +7,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using System;
 
 // 需要 EventTrigger 脚本的支援
 [RequireComponent(typeof(EventTrigger))]
 public class CardView : UIView
 {
+    public Button button;
     public Image frontImage;
     public Image backImage;
 
     private bool flag = false;
 
+    private Action callback;
     protected override void Start()
     {
         BindingSet<CardView, CardViewModel> bindingSet = this.CreateBindingSet<CardView, CardViewModel>();
@@ -26,7 +29,6 @@ public class CardView : UIView
         bindingSet.Build();
 
         backImage.transform.localRotation = Quaternion.Euler(0, 90, 0);
-
 
     }
 
@@ -40,6 +42,10 @@ public class CardView : UIView
     public void OnClick(BaseEventData pointData)
     {
         this.flag = true;
+        if (callback != null)
+        {
+            callback();
+        }
 
         Tweener tweener = frontImage.transform.DOLocalRotate(new Vector3(0, 90, 0), 0.8f);
         tweener.OnComplete(OnTweenComplete);
@@ -59,4 +65,8 @@ public class CardView : UIView
         transform.DOScale(1f, 0.5f);
     }
 
+    public void ClickCallback(Action callback) 
+    {
+        this.callback = callback;
+    }
 }
