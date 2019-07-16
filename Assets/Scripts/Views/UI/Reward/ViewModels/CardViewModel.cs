@@ -1,4 +1,5 @@
-﻿using Loxodon.Framework.ViewModels;
+﻿using Loxodon.Framework.Interactivity;
+using Loxodon.Framework.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +8,29 @@ using System.Threading.Tasks;
 
 public class CardViewModel : ViewModelBase
 {
-    private string frontImage;
-    private string backImage;
+    private string frontIcon;
+    private string backIcon;
 
-    public string FrontImage
+    private InteractionRequest clickedRequest;
+
+    public CardViewModel():base()
     {
-        get { return this.frontImage; }
-        set { this.Set<string>(ref frontImage, value, "FrontImage"); }
+        this.clickedRequest = new InteractionRequest(this);
     }
-    public string BackImage
+
+    public string FrontIcon
     {
-        get { return this.backImage; }
-        set { this.Set<string>(ref backImage, value, "BackImage"); }
+        get { return this.frontIcon; }
+        set { this.Set<string>(ref frontIcon, value, "FrontIcon"); }
+    }
+    public string BackIcon
+    {
+        get { return this.backIcon; }
+        set { this.Set<string>(ref backIcon, value, "BackIcon"); }
+    }
+
+    public InteractionRequest ClickedRequest
+    {
+        get { return this.clickedRequest; }
     }
 }

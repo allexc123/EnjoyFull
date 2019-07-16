@@ -6,14 +6,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class CardDrawWindow : Window
 {
+
+    public class CardClickedEvent : UnityEvent<int>
+    {
+        public CardClickedEvent()
+        {
+
+        }
+    }
 
     public Transform content;
     public GameObject cardTemplate;
 
     private ObservableList<CardViewModel> cards;
+
+    public CardClickedEvent OnSelectChanged = new CardClickedEvent();
 
     private int count = 5;
 
@@ -21,6 +33,7 @@ public class CardDrawWindow : Window
     {
         BindingSet<CardDrawWindow, CardBagViewModel> bindingSet = this.CreateBindingSet<CardDrawWindow, CardBagViewModel>();
         bindingSet.Bind().For(v => v.Cards).To(vm => vm.Cards).OneWay();
+        bindingSet.Bind().For(v => v.OnSelectChanged).To(vm => vm.Select(0)).OneWay();
 
         bindingSet.Build();
     }
@@ -88,16 +101,32 @@ public class CardDrawWindow : Window
         int y = index / 3;
         cardViewGo.transform.localPosition = new Vector3(-300 + 300 * x, 300 - 300 * y, 0);
 
+        Button button = cardViewGo.GetComponent<Button>();
+        button.onClick.AddListener(() => OnSelectChange(cardViewGo));
 
         cardViewGo.SetActive(true);
 
         CardView cardView = cardViewGo.GetComponent<CardView>();
         cardView.SetDataContext(card);
-        cardView.ClickCallback(()=> {
-            count++;
-            ((CardViewModel)card).BackImage = "a" + count;
-        });
+       
     }
 
-    
+    protected virtual void OnSelectChange(GameObject cardViewGo)
+    {
+        if (this.OnSelectChanged == null || cardViewGo == null)
+        {
+            return;
+        }
+        for (int i = 0; i < this.content.childCount; i++)
+        {
+            var child = this.content.GetChild(i);
+            if (cardViewGo.transform == child)
+            {
+                this.OnSelectChanged.Invoke(i);
+                break;
+            }
+        }
+    }
+
+
 }
