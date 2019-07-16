@@ -34,19 +34,23 @@ public class CardView : UIView
 
     }
 
-    void OnTweenComplete()
-    {
-        backImage.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.8f);
-        frontImage.gameObject.SetActive(false);
-        //backImage.gameObject.SetActive(true);
-    }
-
     public void OnClick(object sender, InteractionEventArgs args)
     {
+        var callback = args.Callback;
         this.flag = true;
        
         Tweener tweener = frontImage.transform.DOLocalRotate(new Vector3(0, 90, 0), 0.8f);
-        tweener.OnComplete(OnTweenComplete);
+        tweener.OnComplete(() => {
+            backImage.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.8f).OnComplete(()=> {
+                frontImage.gameObject.SetActive(false);
+                if (callback != null)
+                {
+                    callback();
+                }
+            });
+
+
+        });
 
     }
 

@@ -15,7 +15,7 @@ public class PayModel : ViewModelBase
 
     private int countDown = 30;
 
-    private InteractionRequest dismissRequest;
+    //private InteractionRequest dismissRequest;
 
     private InteractionRequest<CardBagViewModel> cardBagRequest;
 
@@ -26,7 +26,7 @@ public class PayModel : ViewModelBase
     public PayModel() : base()
     {
 
-        this.dismissRequest = new InteractionRequest(this);
+        //this.dismissRequest = new InteractionRequest(this);
 
         this.cardBagRequest = new InteractionRequest<CardBagViewModel>(this);
 
@@ -59,7 +59,7 @@ public class PayModel : ViewModelBase
     private void ClosePay()
     {
         result.Cancel();
-        this.dismissRequest.Raise();
+        //this.dismissRequest.Raise();
     }
 
     public int CountDown
@@ -68,10 +68,10 @@ public class PayModel : ViewModelBase
         set { this.Set<int>(ref countDown, value, "CountDown");}
     }
 
-    public IInteractionRequest DismissRequest
-    {
-        get { return this.dismissRequest; }
-    }
+    //public IInteractionRequest DismissRequest
+    //{
+    //    get { return this.dismissRequest; }
+    //}
 
     public InteractionRequest<CardBagViewModel> CardBagRequest
     {

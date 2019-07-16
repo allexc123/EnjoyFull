@@ -1,5 +1,7 @@
 ﻿using Loxodon.Framework.Binding;
 using Loxodon.Framework.Binding.Builder;
+using Loxodon.Framework.Contexts;
+using Loxodon.Framework.Interactivity;
 using Loxodon.Framework.Observables;
 using Loxodon.Framework.Views;
 using System.Collections;
@@ -34,6 +36,7 @@ public class CardDrawWindow : Window
         BindingSet<CardDrawWindow, CardBagViewModel> bindingSet = this.CreateBindingSet<CardDrawWindow, CardBagViewModel>();
         bindingSet.Bind().For(v => v.Cards).To(vm => vm.Cards).OneWay();
         bindingSet.Bind().For(v => v.OnSelectChanged).To(vm => vm.Select(0)).OneWay();
+        bindingSet.Bind().For(v => v.OnOpenRewardWindow(null, null)).To(vm => vm.OpenRewardRequest);
 
         bindingSet.Build();
     }
@@ -128,5 +131,15 @@ public class CardDrawWindow : Window
         }
     }
 
+    protected void OnOpenRewardWindow(object sender, InteractionEventArgs args)
+    {
+        var cardBagViewModel = args.Context;
+        IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
+        RewardWindow rewardWindow = viewLocator.LoadWindow<RewardWindow>(this.WindowManager, "UI/Reward");
+
+        rewardWindow.SetDataContext(cardBagViewModel);
+        rewardWindow.Create();
+        rewardWindow.Show();
+    }
 
 }

@@ -427,7 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db03fb4c84101492db5332f97f5e2558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windowType: 0
+  windowType: 1
   countDown: {fileID: 1252672738942574307}
   mask: {fileID: 7737762368994039871}
 --- !u!1 &1252672739170779357

@@ -25,6 +25,8 @@ public class CardBagViewModel : ViewModelBase
 
     private InteractionRequest<CardBagViewModel> openCardBagRequest;
 
+    private InteractionRequest<CardBagViewModel> openRewardRequest;
+
     private SimpleCommand openCardBag;
 
     private int openCount = 0;
@@ -48,7 +50,8 @@ public class CardBagViewModel : ViewModelBase
             this.openCardBagRequest.Raise(this);
         });
 
- 
+        this.openRewardRequest = new InteractionRequest<CardBagViewModel>(this);
+
 
         Reward reward1 = new Reward();
         reward1.Icon = "a9";
@@ -87,6 +90,11 @@ public class CardBagViewModel : ViewModelBase
         get { return this.openCardBag; }
     }
 
+    public InteractionRequest<CardBagViewModel> OpenRewardRequest
+    {
+        get { return this.openRewardRequest; }
+    }
+
     public void Select(int index)
     {
         if (index <= -1 || index > this.cards.Count - 1)
@@ -106,8 +114,17 @@ public class CardBagViewModel : ViewModelBase
                 var reward = rewards[openCount - 1];
                 cardModel.BackIcon = reward.Icon;
 
-                cardModel.ClickedRequest.Raise();
-                this.openCount--;
+
+                cardModel.ClickedRequest.Raise(() => {
+                    this.openCount--;
+                    if (this.openCount <= 0)
+                    {
+                        this.openRewardRequest.Raise(this);
+                    }
+                });
+
+
+                
             }
            
         }

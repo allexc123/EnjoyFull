@@ -24,7 +24,7 @@ public class PayWindow : Window
 
         BindingSet<PayWindow, PayModel> bindingSet = this.CreateBindingSet<PayWindow, PayModel>();
 
-        bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
+        //bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
         bindingSet.Bind().For(v => v.OnOpenCardBagWindow(null, null)).To(vm => vm.CardBagRequest);
 
         bindingSet.Bind(this.countDown).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.CountDown)).TwoWay();
@@ -35,12 +35,12 @@ public class PayWindow : Window
 
    
 
-    public void OnDismissRequest(object sender, InteractionEventArgs args)
-    {
-        log.Debug("Close pay");
-        this.Dismiss();
+    //public void OnDismissRequest(object sender, InteractionEventArgs args)
+    //{
+    //    log.Debug("Close pay");
+    //    this.Dismiss();
 
-    }
+    //}
 
     protected void OnOpenCardBagWindow(object sender, InteractionEventArgs args)
     {
