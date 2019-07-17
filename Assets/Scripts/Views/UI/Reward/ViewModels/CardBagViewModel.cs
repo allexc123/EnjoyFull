@@ -40,7 +40,7 @@ public class CardBagViewModel : ViewModelBase
         {
             CardViewModel cardViewModel = new CardViewModel();
             cardViewModel.BackIcon = "a0";
-            cardViewModel.FrontIcon = "a1";
+            cardViewModel.FrontIcon = "CardBack";
             cards.Add(cardViewModel);
         }
 

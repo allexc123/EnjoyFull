@@ -102,7 +102,7 @@ public class CardDrawWindow : Window
        
         int x = index % 3;
         int y = index / 3;
-        cardViewGo.transform.localPosition = new Vector3(-300 + 300 * x, 300 - 300 * y, 0);
+        cardViewGo.transform.localPosition = new Vector3(-410 + 410 * x, 360 - 325 * y, 0);
 
         Button button = cardViewGo.GetComponent<Button>();
         button.onClick.AddListener(() => OnSelectChange(cardViewGo));

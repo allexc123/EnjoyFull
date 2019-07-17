@@ -58,7 +58,7 @@ public class CardView : UIView
     {
         if (this.flag) return;
 
-        transform.DOScale(1.2f, 0.5f);
+        transform.DOScale(1.1f, 0.5f);
     }
     public void OnMouseExit(BaseEventData pointData)
     {
