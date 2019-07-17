@@ -30,6 +30,7 @@ public class CardBagViewModel : ViewModelBase
     private SimpleCommand openCardBag;
 
     private int openCount = 0;
+    private int openFinish = 0;
 
     private List<Reward> rewards = new List<Reward>();
 
@@ -73,7 +74,8 @@ public class CardBagViewModel : ViewModelBase
 
         rewards.Reverse();
 
-        this.openCount = rewards.Count;
+        this.openFinish = this.openCount = rewards.Count;
+
     }
 
     public ObservableList<CardViewModel> Cards
@@ -113,11 +115,11 @@ public class CardBagViewModel : ViewModelBase
 
                 var reward = rewards[openCount - 1];
                 cardModel.BackIcon = reward.Icon;
-
+                this.openCount--;
 
                 cardModel.ClickedRequest.Raise(() => {
-                    this.openCount--;
-                    if (this.openCount <= 0)
+                    openFinish--;
+                    if (this.openFinish <= 0)
                     {
                         this.openRewardRequest.Raise(this);
                     }
