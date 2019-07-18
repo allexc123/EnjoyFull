@@ -24,19 +24,23 @@ public class CardDrawWindow : Window
 
     public Transform content;
     public GameObject cardTemplate;
+    public Text countDown;
+    public Text openCount;
 
     private ObservableList<CardViewModel> cards;
 
     public CardClickedEvent OnSelectChanged = new CardClickedEvent();
 
-    private int count = 5;
-
+    
     protected override void OnCreate(IBundle bundle)
     {
-        BindingSet<CardDrawWindow, CardBagViewModel> bindingSet = this.CreateBindingSet<CardDrawWindow, CardBagViewModel>();
+        BindingSet<CardDrawWindow, CardDrawModel> bindingSet = this.CreateBindingSet<CardDrawWindow, CardDrawModel>();
         bindingSet.Bind().For(v => v.Cards).To(vm => vm.Cards).OneWay();
         bindingSet.Bind().For(v => v.OnSelectChanged).To(vm => vm.Select(0)).OneWay();
         bindingSet.Bind().For(v => v.OnOpenRewardWindow(null, null)).To(vm => vm.OpenRewardRequest);
+
+        bindingSet.Bind(this.countDown).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.CountDown)).OneWay();
+        bindingSet.Bind(this.openCount).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.OpenCount)).OneWay();
 
         bindingSet.Build();
     }

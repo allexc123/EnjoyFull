@@ -30,6 +30,8 @@ public class PayModel : ViewModelBase
 
         this.cardBagRequest = new InteractionRequest<CardBagViewModel>(this);
 
+        
+
         ApplicationContext context = Context.GetApplicationContext();
         ITask task = context.GetService<ITask>();
 
@@ -38,28 +40,35 @@ public class PayModel : ViewModelBase
             CountDown -= 1;
             if (countDown <= 0)
             {
-                ClosePay();
+                Executors.RunOnMainThread(() =>
+                {
+                    //this.cardBagRequest.Raise(cardBagModel);
+                    ClosePay();
+                }, true);
+                
             }
 
         }, 1000, 1000);
 
-        var cardBagModel = new CardBagViewModel();
+       
 
         this.showCardBag = new SimpleCommand(()=>
         {
             this.showCardBag.Enabled = false;
-            this.cardBagRequest.Raise(cardBagModel, vm => 
-            {
-                ClosePay();
-            });
+          
+            ClosePay();
 
         });
 
     }
     private void ClosePay()
     {
-        result.Cancel();
-        //this.dismissRequest.Raise();
+        this.result.Cancel();
+        var cardBagModel = new CardBagViewModel();
+        this.cardBagRequest.Raise(cardBagModel);
+        //dismissRequest.Raise();
+
+
     }
 
     public int CountDown

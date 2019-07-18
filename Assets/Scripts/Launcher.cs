@@ -87,7 +87,7 @@ namespace LX
 
             ApplicationContext context = Context.GetApplicationContext();
             ISession session = context.GetService<ISession>();
-            session.Connect("127.0.0.1", 10001);
+            //session.Connect("127.0.0.1", 10001);
         }
 
         private void Update()

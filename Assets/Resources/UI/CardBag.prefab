@@ -30,7 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2530820893698858657}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -93,7 +93,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2530820893698858657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -105,8 +105,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4242289086576051708}
   - {fileID: 2530820894315931291}
+  - {fileID: 4242289086576051708}
   - {fileID: 2530820893842062633}
   - {fileID: 2530820894989455306}
   m_Father: {fileID: 0}
@@ -166,8 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 590b0c2de1f759c4dba5e60573364f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windowType: 0
+  windowType: 1
   openCardBag: {fileID: 2530820894989455307}
+  countDown: {fileID: 2530820894315931288}
 --- !u!225 &2534751392040806555
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -271,12 +272,12 @@ GameObject:
   - component: {fileID: 2530820894315931289}
   - component: {fileID: 2530820894315931288}
   m_Layer: 5
-  m_Name: Text
+  m_Name: CountDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2530820894315931291
 RectTransform:
   m_ObjectHideFlags: 0
@@ -289,12 +290,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2530820893698858657}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 322}
-  m_SizeDelta: {x: 800, y: 100}
+  m_AnchoredPosition: {x: 0, y: 384}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2530820894315931289
 CanvasRenderer:
@@ -337,7 +338,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u606D\u559C\u4F60\u83B7\u5F97\u4E00\u4E2A\u84DD\u8272\u5361\u5305"
+  m_Text: 20
 --- !u!1 &2530820894518064352
 GameObject:
   m_ObjectHideFlags: 0

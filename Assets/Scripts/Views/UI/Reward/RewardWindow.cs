@@ -31,9 +31,9 @@ public class RewardWindow : Window
 
     protected override void OnCreate(IBundle bundle)
     {
-        RewardViewModel rewardViewModel = new RewardViewModel();
+        //RewardViewModel rewardViewModel = new RewardViewModel();
 
-        this.SetDataContext(rewardViewModel);
+        //this.SetDataContext(rewardViewModel);
 
         BindingSet<RewardWindow, RewardViewModel> bindingSet = this.CreateBindingSet<RewardWindow, RewardViewModel>();
 

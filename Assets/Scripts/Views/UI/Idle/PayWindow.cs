@@ -33,7 +33,7 @@ public class PayWindow : Window
         bindingSet.Build();
     }
 
-   
+
 
     //public void OnDismissRequest(object sender, InteractionEventArgs args)
     //{
@@ -48,7 +48,7 @@ public class PayWindow : Window
         {
             IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
             CardBagWindow cardBagWindow = viewLocator.LoadWindow<CardBagWindow>(this.WindowManager, "UI/CardBag");
-            var callback = args.Callback;
+            //var callback = args.Callback;
             var cardBagModel = args.Context;
 
             //if (callback != null)
@@ -65,12 +65,7 @@ public class PayWindow : Window
 
             cardBagWindow.SetDataContext(cardBagModel);
             cardBagWindow.Create();
-            cardBagWindow.Show().OnFinish(()=> {
-                if (callback != null)
-                {
-                    callback();
-                }
-            });
+            cardBagWindow.Show();
         }
         catch (Exception e)
         {

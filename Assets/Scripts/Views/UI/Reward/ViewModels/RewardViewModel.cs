@@ -1,6 +1,7 @@
 ﻿using Loxodon.Framework.Asynchronous;
 using Loxodon.Framework.Commands;
 using Loxodon.Framework.Contexts;
+using Loxodon.Framework.Execution;
 using Loxodon.Framework.Interactivity;
 using Loxodon.Framework.Observables;
 using Loxodon.Framework.ViewModels;
@@ -106,7 +107,11 @@ public class RewardViewModel : ViewModelBase
             CountDown -= 1;
             if (countDown <= 0)
             {
-                Close();
+                Executors.RunOnMainThread(() =>
+                {
+                    Close();
+                }, true);
+               
             }
 
         }, 1000, 1000);

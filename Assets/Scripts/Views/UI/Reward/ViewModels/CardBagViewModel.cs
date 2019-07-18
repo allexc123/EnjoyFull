@@ -1,4 +1,7 @@
-﻿using Loxodon.Framework.Commands;
+﻿using Loxodon.Framework.Asynchronous;
+using Loxodon.Framework.Commands;
+using Loxodon.Framework.Contexts;
+using Loxodon.Framework.Execution;
 using Loxodon.Framework.Interactivity;
 using Loxodon.Framework.Observables;
 using Loxodon.Framework.ViewModels;
@@ -7,83 +10,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Reward
-{
-    //图标
-    public string Icon { get; set; }
-    //名称
-    public string Name { get; set; }
-    //描述
-    public string Desc { get; set; }
-}
+
 
 public class CardBagViewModel : ViewModelBase
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(CardBagViewModel));
+   
+    private InteractionRequest<CardDrawModel> openCardBagRequest;
 
-    private readonly ObservableList<CardViewModel> cards = new ObservableList<CardViewModel>();
-
-    private InteractionRequest<CardBagViewModel> openCardBagRequest;
-
-    private InteractionRequest<CardBagViewModel> openRewardRequest;
 
     private SimpleCommand openCardBag;
 
-    private int openCount = 0;
-    private int openFinish = 0;
 
-    private List<Reward> rewards = new List<Reward>();
+    private int countDown = 20;
+    private IAsyncResult result;
 
     public CardBagViewModel() : base()
     {
-        for (int i = 0; i < 9; i++)
-        {
-            CardViewModel cardViewModel = new CardViewModel();
-            cardViewModel.BackIcon = "a0";
-            cardViewModel.FrontIcon = "CardBack";
-            cards.Add(cardViewModel);
-        }
+        
 
-        this.openCardBagRequest = new InteractionRequest<CardBagViewModel>(this);
+        this.openCardBagRequest = new InteractionRequest<CardDrawModel>(this);
         this.openCardBag = new SimpleCommand(()=> 
         {
             this.openCardBag.Enabled = false;
-            this.openCardBagRequest.Raise(this);
+            CancelTask();
         });
 
-        this.openRewardRequest = new InteractionRequest<CardBagViewModel>(this);
+        ApplicationContext context = Context.GetApplicationContext();
+        ITask task = context.GetService<ITask>();
 
+        CountDown = 20;
+        this.result = task.Scheduled.ScheduleAtFixedRate(() =>
+        {
+            CountDown--;
+            if (countDown <= 0)
+            {
+               
+                Executors.RunOnMainThread(() =>
+                {
+                    CancelTask();
+                }, true);
+            }
 
-        Reward reward1 = new Reward();
-        reward1.Icon = "a9";
-        reward1.Name = "全聚德";
-        reward1.Desc = "全聚德9折优惠券";
-        rewards.Add(reward1);
-
-        Reward reward2 = new Reward();
-        reward2.Icon = "a4";
-        reward2.Name = "肯德基";
-        reward2.Desc = "肯德基4折优惠券";
-        rewards.Add(reward2);
-
-        Reward reward3 = new Reward();
-        reward3.Icon = "a0";
-        reward3.Name = "乐享";
-        reward3.Desc = "乐享免单券";
-        rewards.Add(reward3);
-
-        rewards.Reverse();
-
-        this.openFinish = this.openCount = rewards.Count;
+        }, 1000, 1000);
 
     }
-
-    public ObservableList<CardViewModel> Cards
+    private void CancelTask()
     {
-        get { return this.cards; }
+        this.result.Cancel();
+        CardDrawModel cardDrawModel = new CardDrawModel();
+        this.openCardBagRequest.Raise(cardDrawModel);
     }
 
-    public InteractionRequest<CardBagViewModel> OpenCardBagRequest
+    public InteractionRequest<CardDrawModel> OpenCardBagRequest
     {
         get { return this.openCardBagRequest; }
     }
@@ -92,43 +70,13 @@ public class CardBagViewModel : ViewModelBase
         get { return this.openCardBag; }
     }
 
-    public InteractionRequest<CardBagViewModel> OpenRewardRequest
+    public int CountDown
     {
-        get { return this.openRewardRequest; }
+        get { return this.countDown; }
+        set { this.Set<int>(ref countDown, value, "CountDown"); }
     }
 
-    public void Select(int index)
-    {
-        if (index <= -1 || index > this.cards.Count - 1)
-            return;
+    
 
-        for (int i = 0; i < this.cards.Count; i++)
-        {
-            if (i == index)
-            {
-                if (this.openCount <= 0)
-                {
-                    return;
-                }
-                log.DebugFormat("Select, Current Index:{0}", index);
-                var cardModel = this.cards[i];
-
-                var reward = rewards[openCount - 1];
-                cardModel.BackIcon = reward.Icon;
-                this.openCount--;
-
-                cardModel.ClickedRequest.Raise(() => {
-                    openFinish--;
-                    if (this.openFinish <= 0)
-                    {
-                        this.openRewardRequest.Raise(this);
-                    }
-                });
-
-
-                
-            }
-           
-        }
-    }
+   
 }
