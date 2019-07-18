@@ -68,7 +68,7 @@ public class RewardViewModel : ViewModelBase
 
                 if (n.DialogResult == AlertDialog.BUTTON_POSITIVE)
                 {
-                    interactionFinished.Raise();
+                    ClosePage();
                 }
                 else if (n.DialogResult == AlertDialog.BUTTON_NEGATIVE)
                 {
@@ -91,7 +91,7 @@ public class RewardViewModel : ViewModelBase
 
                 if (n.DialogResult == AlertDialog.BUTTON_POSITIVE)
                 {
-                    interactionFinished.Raise();
+                    ClosePage();
                 }
                 else if (n.DialogResult == AlertDialog.BUTTON_NEGATIVE)
                 {
@@ -109,7 +109,7 @@ public class RewardViewModel : ViewModelBase
             {
                 Executors.RunOnMainThread(() =>
                 {
-                    Close();
+                    ClosePage();
                 }, true);
                
             }
@@ -118,7 +118,7 @@ public class RewardViewModel : ViewModelBase
 
     }
 
-    private void Close()
+    private void ClosePage()
     {
         this.result.Cancel();
         interactionFinished.Raise();
