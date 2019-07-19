@@ -7,10 +7,10 @@ using Loxodon.Framework.Execution;
 
 class TaskContext : ITask
 {
-    private ThreadScheduledExecutor scheduled;
+    private IScheduledExecutor scheduled;
     public TaskContext()
     {
-        scheduled = new ThreadScheduledExecutor();
+        scheduled = new CoroutineScheduledExecutor();
         scheduled.Start();
     }
     public IScheduledExecutor Scheduled
