@@ -16,6 +16,8 @@ public class Reward
     public string Name { get; set; }
     //描述
     public string Desc { get; set; }
+    //表述图标
+    public string DescIcon { get; set; }
 }
 
 public class CardDrawModel : ViewModelBase
@@ -49,22 +51,18 @@ public class CardDrawModel : ViewModelBase
 
 
         Reward reward1 = new Reward();
-        reward1.Icon = "a9";
-        reward1.Name = "全聚德";
-        reward1.Desc = "全聚德9折优惠券";
+        reward1.Icon = "a7";
+        reward1.Name = "海底捞全单7折券x1";
+        reward1.Desc = "海底捞全单7折券";
+        reward1.DescIcon = "haidilao";
         rewards.Add(reward1);
 
         Reward reward2 = new Reward();
-        reward2.Icon = "a4";
-        reward2.Name = "肯德基";
-        reward2.Desc = "肯德基4折优惠券";
+        reward2.Icon = "a5";
+        reward2.Name = "肯德基全家桶5折券x1";
+        reward2.Desc = "肯德基全家桶5折券";
+        reward2.DescIcon = "kendeji";
         rewards.Add(reward2);
-
-        Reward reward3 = new Reward();
-        reward3.Icon = "a0";
-        reward3.Name = "乐享";
-        reward3.Desc = "乐享免单券";
-        rewards.Add(reward3);
 
         rewards.Reverse();
 
@@ -183,7 +181,7 @@ public class CardDrawModel : ViewModelBase
                             {
                                 
                                 result.Cancel();
-                                RewardViewModel rewardViewModel = new RewardViewModel();
+                                RewardViewModel rewardViewModel = new RewardViewModel(this.rewards);
                                 this.openRewardRequest.Raise(rewardViewModel);
                             }, true);
 

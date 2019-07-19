@@ -11,6 +11,8 @@ using UnityEngine.UI;
 public class IdleWindow : Window
 {
     public Button showPay;
+
+    public Image image;
     protected override void OnCreate(IBundle bundle)
     {
         IdleModel idleModel = new IdleModel();
@@ -20,7 +22,11 @@ public class IdleWindow : Window
 
         bindingSet.Bind(this.showPay).For(v => v.onClick).To(vm => vm.ShowPay);
 
+        bindingSet.Bind(this.image).For(v => v.sprite).To(vm => vm.Icon).WithConversion("merchandiseConverter").TwoWay();
+
         bindingSet.Build();
+
+        idleModel.Startup();
     }
 
     private void OnShowPay(object sender, InteractionEventArgs args)

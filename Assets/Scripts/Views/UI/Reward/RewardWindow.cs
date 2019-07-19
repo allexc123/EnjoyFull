@@ -3,6 +3,7 @@ using Loxodon.Framework.Binding.Builder;
 using Loxodon.Framework.Interactivity;
 using Loxodon.Framework.Observables;
 using Loxodon.Framework.Views;
+using Loxodon.Framework.Views.InteractionActions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -29,17 +30,21 @@ public class RewardWindow : Window
 
     private AlertDialog alertDialog;
 
+    private ToastInteractionAction toastInteractionAction;
+
     protected override void OnCreate(IBundle bundle)
     {
         //RewardViewModel rewardViewModel = new RewardViewModel();
 
         //this.SetDataContext(rewardViewModel);
 
+        this.toastInteractionAction = new ToastInteractionAction(this);
+
         BindingSet<RewardWindow, RewardViewModel> bindingSet = this.CreateBindingSet<RewardWindow, RewardViewModel>();
 
         bindingSet.Bind().For(v => v.Coupons).To(vm => vm.Coupons).OneWay();
 
-        bindingSet.Bind(this.image).For(v => v.sprite).To(vm => vm.Icon).WithConversion("spriteConverter").OneWay();
+        bindingSet.Bind(this.image).For(v => v.sprite).To(vm => vm.Icon).WithConversion("merchandiseConverter").OneWay();
 
         bindingSet.Bind(this.phoneNumber).For(v => v.text, v => v.onEndEdit).To(vm => vm.PhoneNumber).TwoWay();
 
@@ -52,6 +57,8 @@ public class RewardWindow : Window
         bindingSet.Bind().For(v => v.OnInteractionFinished(null, null)).To(vm => vm.InteractionFinished);
 
         bindingSet.Bind(this.countDown).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.CountDown)).TwoWay();
+
+        bindingSet.Bind().For(v => v.toastInteractionAction).To(vm => vm.ToastRequest);
 
         bindingSet.Build();
     }
@@ -138,11 +145,13 @@ public class RewardWindow : Window
 
             if (callback != null)
                 callback();
+            alertDialog = null;
         });
     }
 
     public virtual void OnInteractionFinished(object sender, InteractionEventArgs args)
     {
+
         if (alertDialog != null)
         {
             alertDialog.Cancel();
