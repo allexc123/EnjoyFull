@@ -77,11 +77,7 @@ public class CardDrawModel : ViewModelBase
             CountDown--;
             if (countDown <= 0)
             {
-                Executors.RunOnMainThread(() =>
-                {
-                    CloseCardBag();
-                }, true);
-
+                CloseCardBag();
             }
 
         }, 1000, 1000);
@@ -149,8 +145,6 @@ public class CardDrawModel : ViewModelBase
             openFinish--;
             if (this.openFinish <= 0)
             {
-                //RewardViewModel rewardViewModel = new RewardViewModel();
-                //this.openRewardRequest.Raise(rewardViewModel);
                 AllDrawCard();
 
             }
@@ -169,27 +163,11 @@ public class CardDrawModel : ViewModelBase
 
                     ApplicationContext context = Context.GetApplicationContext();
                     ITask task = context.GetService<ITask>();
-                    
-                    int times = 0;
-                    this.result = task.Scheduled.ScheduleAtFixedRate(() =>
-                    {
-                        times++;
-                        
-                        if (times >= 2)
-                        {
-                            Executors.RunOnMainThread(() =>
-                            {
-                                
-                                result.Cancel();
-                                RewardViewModel rewardViewModel = new RewardViewModel(this.rewards);
-                                this.openRewardRequest.Raise(rewardViewModel);
-                            }, true);
 
-                        }
-
-                    }, 1000, 1000);
-                   
-
+                    task.Scheduled.Schedule(()=> {
+                        RewardViewModel rewardViewModel = new RewardViewModel(this.rewards);
+                        this.openRewardRequest.Raise(rewardViewModel);
+                    }, 2000);
                 }
             });
         }

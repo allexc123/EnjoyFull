@@ -166,6 +166,8 @@ GameObject:
   - component: {fileID: 1252672739072090308}
   - component: {fileID: 1252672739072090310}
   - component: {fileID: 2924804178130543562}
+  - component: {fileID: 8019634356435287794}
+  - component: {fileID: 4745897386959565957}
   m_Layer: 5
   m_Name: Pay
   m_TagString: Untagged
@@ -258,6 +260,38 @@ MonoBehaviour:
   windowType: 1
   countDown: {fileID: 1252672738942574307}
   mask: {fileID: 7737762368994039871}
+--- !u!114 &8019634356435287794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252672739072090314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f625f5586ac984eb891d80c695dfef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationType: 0
+  from: 0
+  to: 1
+  duration: 0.3
+--- !u!114 &4745897386959565957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252672739072090314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f625f5586ac984eb891d80c695dfef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationType: 1
+  from: 1
+  to: 0
+  duration: 1
 --- !u!1 &1252672739182451191
 GameObject:
   m_ObjectHideFlags: 0

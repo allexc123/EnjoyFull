@@ -40,12 +40,8 @@ public class PayModel : ViewModelBase
             CountDown -= 1;
             if (countDown <= 0)
             {
-                Executors.RunOnMainThread(() =>
-                {
-                    //this.cardBagRequest.Raise(cardBagModel);
-                    ClosePay();
-                }, true);
-                
+                ClosePay();
+
             }
 
         }, 1000, 1000);

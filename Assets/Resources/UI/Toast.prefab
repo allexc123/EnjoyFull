@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationType: 0
-  from: 1
+  from: 0
   to: 1
   duration: 0.3
 --- !u!114 &114000012560106214
@@ -252,5 +252,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 1
   from: 1
-  to: 1
+  to: 0
   duration: 1

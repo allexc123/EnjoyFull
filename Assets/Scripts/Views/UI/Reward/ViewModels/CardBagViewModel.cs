@@ -44,11 +44,7 @@ public class CardBagViewModel : ViewModelBase
             CountDown--;
             if (countDown <= 0)
             {
-               
-                Executors.RunOnMainThread(() =>
-                {
-                    CancelTask();
-                }, true);
+               CancelTask();
             }
 
         }, 1000, 1000);

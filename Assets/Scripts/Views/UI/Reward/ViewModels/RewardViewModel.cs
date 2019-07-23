@@ -108,11 +108,7 @@ public class RewardViewModel : ViewModelBase
             CountDown -= 1;
             if (countDown <= 0)
             {
-                Executors.RunOnMainThread(() =>
-                {
-                    ClosePage();
-                }, true);
-               
+                ClosePage();
             }
 
         }, 1000, 1000);
