@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Wheel
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 2
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 66
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: b020b0f6d3bcf974a8b703a93815ba0c, type: 3}
+    totalSpriteSurfaceArea: 1907389
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: b49fea608a9afd44d85c64177be54f10, type: 3}
+  - {fileID: 21300000, guid: 8b768351d6ca0e04da707ff6e68917b0, type: 3}
+  - {fileID: 21300000, guid: 13d16f71d1ab5dc429bd7b6a8de223e8, type: 3}
+  - {fileID: 21300000, guid: a0bc29f1643e17140a9abf9b22745b92, type: 3}
+  - {fileID: 21300000, guid: 2b54fbf186ee7214d89f7039a1d30564, type: 3}
+  - {fileID: 21300000, guid: de5a66726d60ba841a6bcec4dbd61d03, type: 3}
+  - {fileID: 21300000, guid: 8b6265e2624732642b73f2d431166cf9, type: 3}
+  - {fileID: 21300000, guid: daac19445933af847be6395f67145ebb, type: 3}
+  - {fileID: 21300000, guid: 0866e845bd3668449b95cfed09b75849, type: 3}
+  - {fileID: 21300000, guid: e7b86ac57c3433948abec2b5e280b200, type: 3}
+  - {fileID: 21300000, guid: c2d047d54d1650e4aacacdafc5f77b0c, type: 3}
+  - {fileID: 21300000, guid: 985d340607bc1e043a70dd085948a13c, type: 3}
+  - {fileID: 21300000, guid: a5def516b60914c4badf6e4a4ac1346e, type: 3}
+  - {fileID: 21300000, guid: 8b2d280747b120f49aebbfc9615ace34, type: 3}
+  - {fileID: 21300000, guid: 1dd58eb7de3366f4cbd74334586986d8, type: 3}
+  - {fileID: 21300000, guid: da9a22c7937d19044bc93b0b878dc1de, type: 3}
+  - {fileID: 21300000, guid: 4f37e8b84a085274da2e71fd5cfa80c2, type: 3}
+  - {fileID: 21300000, guid: 1d89bba9be21d4c4893ce0c03c945a9c, type: 3}
+  - {fileID: 21300000, guid: abfdae0a7dd9b3549ab81ed76d7ba266, type: 3}
+  - {fileID: 21300000, guid: a6b6739bd927cda4dadcddb36d375a8f, type: 3}
+  - {fileID: 21300000, guid: 3ec641bb2d417c749a4fcfba4c5521dd, type: 3}
+  - {fileID: 21300000, guid: 680f34bb45c00ac47a31e6d06e88eb40, type: 3}
+  - {fileID: 21300000, guid: f87178cbfdd40a440a4efef13eedde2f, type: 3}
+  - {fileID: 21300000, guid: b15f1adba9f8be6418cb7de127f080ae, type: 3}
+  - {fileID: 21300000, guid: f8a4edfbf2140d349a20495fed916772, type: 3}
+  - {fileID: 21300000, guid: 99c41f3c61a78634a909398730057ea8, type: 3}
+  - {fileID: 21300000, guid: 9e03db5cbfc3aaf418a8a5d3ae4ad12e, type: 3}
+  - {fileID: 21300000, guid: b96ca68c2f3e3ad40a8a032b8361ac9b, type: 3}
+  - {fileID: 21300000, guid: 5c9e3c5d5b7bab24baf176b352543a99, type: 3}
+  - {fileID: 21300000, guid: 9eddee8d2cc7f8e4cb9f7d616a0f210c, type: 3}
+  - {fileID: 21300000, guid: 1accc59e32c8896438f0d9936a6ecc7e, type: 3}
+  - {fileID: 21300000, guid: 40cd604f709955443be041059f28ded9, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - shengxiao_yang1
+  - shengxiao_gou1
+  - tishiyu2
+  - shengxiao_hou1
+  - shengxiao_long0
+  - shengxiao_zhu0
+  - zhizhen
+  - shengxiao_shu0
+  - jiantou
+  - shengxiao_tu1
+  - shengxiao_ji0
+  - shengxiao_niu1
+  - shengxiao_hou0
+  - shengxiao_long1
+  - shengxiao_gou0
+  - shengxiao_ji1
+  - shengxiao_ma1
+  - tishiyu1
+  - shengxiao_tu0
+  - shengxiao_ma0
+  - zhuanpan
+  - shengxiao_she1
+  - shengxiao_shu1
+  - shengxiao_yang0
+  - shengxiao_hu1
+  - shengxiao_zhu1
+  - suo
+  - go
+  - shengxiao_hu0
+  - shengxiao_she0
+  - shengxiao_niu0
+  - zhuanpananniu
+  m_Tag: Wheel
+  m_IsVariant: 0

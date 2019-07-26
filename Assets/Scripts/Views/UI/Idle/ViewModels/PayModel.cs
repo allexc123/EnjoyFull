@@ -19,6 +19,8 @@ public class PayModel : ViewModelBase
 
     private InteractionRequest<CardBagViewModel> cardBagRequest;
 
+    private InteractionRequest<WheelViewModel> wheelRequest;
+
     private SimpleCommand showCardBag;
 
     private IAsyncResult result;
@@ -30,7 +32,8 @@ public class PayModel : ViewModelBase
 
         this.cardBagRequest = new InteractionRequest<CardBagViewModel>(this);
 
-        
+        this.wheelRequest = new InteractionRequest<WheelViewModel>(this);
+
 
         ApplicationContext context = Context.GetApplicationContext();
         ITask task = context.GetService<ITask>();
@@ -60,8 +63,12 @@ public class PayModel : ViewModelBase
     private void ClosePay()
     {
         this.result.Cancel();
-        var cardBagModel = new CardBagViewModel();
-        this.cardBagRequest.Raise(cardBagModel);
+        //var cardBagModel = new CardBagViewModel();
+        //this.cardBagRequest.Raise(cardBagModel);
+
+        var model = new WheelViewModel();
+        this.wheelRequest.Raise(model);
+
         //dismissRequest.Raise();
 
 
@@ -81,6 +88,10 @@ public class PayModel : ViewModelBase
     public InteractionRequest<CardBagViewModel> CardBagRequest
     {
         get { return this.cardBagRequest; }
+    }
+    public InteractionRequest<WheelViewModel> WheelRequest
+    {
+        get { return this.wheelRequest; }
     }
 
     public ICommand Click

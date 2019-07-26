@@ -60,6 +60,9 @@ namespace LX
             SpriteAtlas merchandiseAtlas = Resources.Load<SpriteAtlas>("Atlas/Merchandise");
             converterRegistry.Register("merchandiseConverter", new SpriteConverter(merchandiseAtlas));
 
+            SpriteAtlas wheelAtlas = Resources.Load<SpriteAtlas>("Atlas/Wheel");
+            converterRegistry.Register("wheelConverter", new SpriteConverter(wheelAtlas));
+
             /*初始化定时器*/
             ITask taskContext = new TaskContext();
             container.Register<ITask>(taskContext);
