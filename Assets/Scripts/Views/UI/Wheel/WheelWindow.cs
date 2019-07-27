@@ -1,5 +1,6 @@
 ﻿using Loxodon.Framework.Binding;
 using Loxodon.Framework.Binding.Builder;
+using Loxodon.Framework.Interactivity;
 using Loxodon.Framework.Observables;
 using Loxodon.Framework.Views;
 using System.Collections;
@@ -8,9 +9,15 @@ using System.Collections.Specialized;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using DG.Tweening;
+using Loxodon.Framework.Contexts;
+using Loxodon.Log;
+using System;
 
 public class WheelWindow : Window
 {
+    private static readonly ILog log = LogManager.GetLogger(typeof(WheelWindow));
+
     public class WheelItemClickedEvent : UnityEvent<int>
     {
         public WheelItemClickedEvent()
@@ -20,8 +27,13 @@ public class WheelWindow : Window
     }
 
     public Transform content;
+    public Button drawButton;
+    public Image drawImage;
 
-    public Button brawButton;
+    public GameObject wheel;
+
+    public Image hintImage;
+
     public GameObject itemTemplate1;
     public GameObject itemTemplate2;
 
@@ -136,14 +148,81 @@ public class WheelWindow : Window
 
         bindingSet.Bind(this).For(v => v.OnSelectChanged).To(vm => vm.Select(0)).OneWay();
 
-        //bindingSet.Bind(this.brawButton).For(v=>v.onClick).To(vm=>vm.AddItem());
+        bindingSet.Bind(this.drawButton).For(v=>v.onClick).To(vm=>vm.DrawCommand).OneWay();
+
+        bindingSet.Bind(this.drawImage).For(v => v.sprite).To(vm => vm.DrawIcon).WithConversion("wheelConverter").OneWay();
+
+        bindingSet.Bind(this.hintImage).For(v => v.sprite).To(vm => vm.HintIcon).WithConversion("wheelConverter").OneWay();
+
+        bindingSet.Bind().For(v => v.WheelTurn(null, null)).To(vm => vm.WheelTurnRequest);
+
+
+        bindingSet.Bind().For(v => v.OnOpenCardBagWindow(null, null)).To(vm => vm.CardBagRequest);
 
         bindingSet.Build();
 
 
-
-
     }
 
-    
+
+    protected void WheelTurn(object sender, InteractionEventArgs args)
+    {
+        var callback = args.Callback;
+        int rotNum = (int)args.Context;
+        int s = 0;
+
+        //选择的圈数
+        int cyclesNum = 5;
+        //持续的时间
+        int duration = 7; 
+
+        //随机60度的倍数
+        s = (cyclesNum * 360 - rotNum * 30) * -1;
+        //Debug.Log("本次旋转的度数： " + s + "\r\n" + "本次随机的结果： " + rotNum);
+        //本次旋转的度数
+        wheel.transform.DORotate(new Vector3(0, 0, s), duration, RotateMode.FastBeyond360).SetEase(Ease.OutQuad).OnComplete(delegate
+        {
+            if (callback != null)
+            {
+                callback();
+            }
+            
+        });
+
+        
+    }
+
+    protected void OnOpenCardBagWindow(object sender, InteractionEventArgs args)
+    {
+        try
+        {
+            IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
+            CardBagWindow cardBagWindow = viewLocator.LoadWindow<CardBagWindow>(this.WindowManager, "UI/CardBag");
+            //var callback = args.Callback;
+            var cardBagModel = args.Context;
+
+            //if (callback != null)
+            //{
+            //    EventHandler handler = null;
+            //    handler = (window, e) =>
+            //    {
+            //        cardBagWindow.OnDismissed -= handler;
+            //        if (callback != null)
+            //            callback();
+            //    };
+            //    cardBagWindow.OnDismissed += handler;
+            //}
+
+            cardBagWindow.SetDataContext(cardBagModel);
+            cardBagWindow.Create();
+            cardBagWindow.Show();
+        }
+        catch (Exception e)
+        {
+            if (log.IsWarnEnabled)
+                log.Warn(e);
+        }
+    }
+
+
 }

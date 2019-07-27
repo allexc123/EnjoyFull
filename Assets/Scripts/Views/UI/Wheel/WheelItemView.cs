@@ -16,7 +16,7 @@ public class WheelItemView : UIView
         bindingSet.Bind(this.image).For(v => v.sprite).To(vm => vm.Icon).WithConversion("wheelConverter").OneWay();
         bindingSet.Bind(this.handImage).For(v => v.active).To(vm => vm.ShowHand).TwoWay();
 
-        //bindingSet.Bind(this.button).For(v => v.onClick).To(vm => vm.Command).OneWay();
+        bindingSet.Bind(this.button).For(v => v.onClick).To(vm => vm.Command).OneWay();
 
         bindingSet.Build();
 

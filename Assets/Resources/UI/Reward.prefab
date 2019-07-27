@@ -1558,13 +1558,15 @@ GameObject:
   - component: {fileID: 6815026499780884499}
   - component: {fileID: 805315339098216802}
   - component: {fileID: 7099384622585441541}
+  - component: {fileID: 1095074209375278179}
+  - component: {fileID: 8130152703110893293}
   m_Layer: 5
   m_Name: Reward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6815026499780884496
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1658,6 +1660,38 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1095074209375278179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6815026499780884497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f625f5586ac984eb891d80c695dfef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationType: 0
+  from: 0
+  to: 1
+  duration: 0.3
+--- !u!114 &8130152703110893293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6815026499780884497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f625f5586ac984eb891d80c695dfef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationType: 1
+  from: 1
+  to: 0
+  duration: 1
 --- !u!1 &7130697478548441641
 GameObject:
   m_ObjectHideFlags: 0

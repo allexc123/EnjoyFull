@@ -17,8 +17,6 @@ public class PayModel : ViewModelBase
 
     //private InteractionRequest dismissRequest;
 
-    private InteractionRequest<CardBagViewModel> cardBagRequest;
-
     private InteractionRequest<WheelViewModel> wheelRequest;
 
     private SimpleCommand showCardBag;
@@ -27,10 +25,6 @@ public class PayModel : ViewModelBase
 
     public PayModel() : base()
     {
-
-        //this.dismissRequest = new InteractionRequest(this);
-
-        this.cardBagRequest = new InteractionRequest<CardBagViewModel>(this);
 
         this.wheelRequest = new InteractionRequest<WheelViewModel>(this);
 
@@ -85,10 +79,6 @@ public class PayModel : ViewModelBase
     //    get { return this.dismissRequest; }
     //}
 
-    public InteractionRequest<CardBagViewModel> CardBagRequest
-    {
-        get { return this.cardBagRequest; }
-    }
     public InteractionRequest<WheelViewModel> WheelRequest
     {
         get { return this.wheelRequest; }

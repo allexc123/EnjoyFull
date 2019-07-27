@@ -22,7 +22,8 @@ public class WheelItemViewModel : ViewModelBase
             //log.Debug("AAAAAAAAAAAAAAAAAAA");
             this.ShowHand = true;
             this.command.Enabled = false;
-           
+
+
         });
     }
 
@@ -31,6 +32,8 @@ public class WheelItemViewModel : ViewModelBase
         get { return this.icon; }
         set { this.Set<string>(ref icon, value, "Icon"); }
     }
+
+    public string Icon1 { get; set; }
 
     public SimpleCommand Command
     {
@@ -41,5 +44,10 @@ public class WheelItemViewModel : ViewModelBase
     {
         get { return this.showHand; }
         set { this.Set<bool>(ref showHand, value, "ShowHand"); }
+    }
+
+    public void ChangeIcon()
+    {
+        this.Icon = Icon1;
     }
 }
