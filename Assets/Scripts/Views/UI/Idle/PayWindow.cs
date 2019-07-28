@@ -27,7 +27,7 @@ public class PayWindow : Window
 
         //bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
         
-        bindingSet.Bind().For(v => v.OnOpenWheelWindow(null, null)).To(vm => vm.WheelRequest);
+        //bindingSet.Bind().For(v => v.OnOpenWheelWindow(null, null)).To(vm => vm.WheelRequest);
 
         bindingSet.Bind(this.countDown).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.CountDown)).TwoWay();
         bindingSet.Bind(this.mask).For(v => v.onClick).To(vm => vm.Click).OneWay();
@@ -45,35 +45,5 @@ public class PayWindow : Window
     //}
 
 
-    protected void OnOpenWheelWindow(object sender, InteractionEventArgs args)
-    {
-        try
-        {
-            IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
-            WheelWindow window = viewLocator.LoadWindow<WheelWindow>(this.WindowManager, "UI/Wheel");
-            //var callback = args.Callback;
-            var model = args.Context;
 
-            //if (callback != null)
-            //{
-            //    EventHandler handler = null;
-            //    handler = (window, e) =>
-            //    {
-            //        cardBagWindow.OnDismissed -= handler;
-            //        if (callback != null)
-            //            callback();
-            //    };
-            //    cardBagWindow.OnDismissed += handler;
-            //}
-
-            window.SetDataContext(model);
-            window.Create();
-            window.Show();
-        }
-        catch (Exception e)
-        {
-            if (log.IsWarnEnabled)
-                log.Warn(e);
-        }
-    }
 }

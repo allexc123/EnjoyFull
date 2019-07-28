@@ -15,7 +15,7 @@ class TaskContext : ITask
     }
     public IScheduledExecutor Scheduled
     {
-        get => this.scheduled;
+        get { return this.scheduled; }
     }
 
     public void Dispose()

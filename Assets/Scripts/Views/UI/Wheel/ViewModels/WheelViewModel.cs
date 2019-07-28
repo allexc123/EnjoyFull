@@ -29,7 +29,7 @@ public class WheelViewModel : ViewModelBase
 
     private int wheelIndex = 0;
 
-    IDisposable disposable;
+    //IDisposable disposable;
 
     public WheelViewModel()
     {
@@ -172,7 +172,7 @@ public class WheelViewModel : ViewModelBase
 
     ~WheelViewModel()
     {
-        this.disposable.Dispose();
+        //this.disposable.Dispose();
     }
 
 }

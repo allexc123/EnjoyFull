@@ -610,7 +610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windowType: 0
-  showPay: {fileID: 3481186282083836935}
+  showWheel: {fileID: 3481186282083836935}
   image: {fileID: 2005254914618169853}
 --- !u!225 &976587740251009653
 CanvasGroup:

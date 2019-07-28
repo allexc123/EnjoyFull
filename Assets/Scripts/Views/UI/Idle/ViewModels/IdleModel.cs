@@ -9,9 +9,9 @@ using UnityEngine;
 
 public class IdleModel : ViewModelBase
 {
-    private InteractionRequest showPayRequest;
+    private InteractionRequest<WheelViewModel> showWheelRequest;
 
-    private SimpleCommand showPay;
+    private SimpleCommand showWheel;
 
     private string icon;
 
@@ -28,10 +28,11 @@ public class IdleModel : ViewModelBase
         icons.Add("haidilao");
         icons.Add("kendeji");
 
-        this.showPayRequest = new InteractionRequest(this);
+        this.showWheelRequest = new InteractionRequest<WheelViewModel>(this);
 
-        this.showPay = new SimpleCommand(()=> {
-            showPayRequest.Raise();
+        this.showWheel = new SimpleCommand(()=> {
+            var model = new WheelViewModel();
+            showWheelRequest.Raise(model);
         });
 
         Icon = icons[0];
@@ -54,13 +55,13 @@ public class IdleModel : ViewModelBase
         }, 1000, 3000);
     }
 
-    public InteractionRequest ShowPayRequest
+    public InteractionRequest<WheelViewModel> ShowWheelRequest
     {
-        get { return this.showPayRequest; }
+        get { return this.showWheelRequest; }
     }
-    public ICommand ShowPay 
+    public ICommand ShowWheel 
     {
-        get { return this.showPay; }
+        get { return this.showWheel; }
     }
     public string Icon
     {

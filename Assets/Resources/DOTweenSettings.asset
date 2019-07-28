@@ -3,13 +3,12 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 16995157, guid: e03f0be6eb7fa4f1181e4f99ce1df076, type: 3}
+  m_Script: {fileID: 0}
   m_Name: DOTweenSettings
   m_EditorClassIdentifier: 
   useSafeMode: 1

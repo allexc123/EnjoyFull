@@ -224,5 +224,13 @@ public class WheelWindow : Window
         }
     }
 
+    private void OnShowPay(object sender, InteractionEventArgs args)
+    {
+        IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
+        PayWindow payView = viewLocator.LoadWindow<PayWindow>(this.WindowManager, "UI/Pay");
+        payView.Create();
+        payView.Show();
+    }
+
 
 }

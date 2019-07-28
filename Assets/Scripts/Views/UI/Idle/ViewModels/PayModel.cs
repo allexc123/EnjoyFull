@@ -88,4 +88,5 @@ public class PayModel : ViewModelBase
     {
         get { return this.showCardBag; }
     }
+
 }
