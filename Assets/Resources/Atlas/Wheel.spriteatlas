@@ -39,13 +39,20 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: b020b0f6d3bcf974a8b703a93815ba0c, type: 3}
-    totalSpriteSurfaceArea: 1924051
+    totalSpriteSurfaceArea: 3608747
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 3ec641bb2d417c749a4fcfba4c5521dd, type: 3}
+  - {fileID: 21300000, guid: 5ee8f3b68425347c2a178215f196deb7, type: 3}
+  - {fileID: 21300000, guid: 3eca7619755934fb3a1d810de3a324ed, type: 3}
+  - {fileID: 21300000, guid: 1b8bf8ed21d4141c0abf5bb3552fcc4f, type: 3}
   - {fileID: 21300000, guid: 8b6265e2624732642b73f2d431166cf9, type: 3}
   - {fileID: 21300000, guid: 40cd604f709955443be041059f28ded9, type: 3}
+  - {fileID: 21300000, guid: 4fd2490182391444fb5ef5c9fce870bd, type: 3}
+  - {fileID: 21300000, guid: e14efa12cde474346b4980bd049feaef, type: 3}
+  - {fileID: 21300000, guid: ad3e7cf2fa1694af3b5e7f28cdcf0785, type: 3}
+  - {fileID: 21300000, guid: 3b290946ac2ef4fc387f3661cb29ecb5, type: 3}
   - {fileID: 21300000, guid: b49fea608a9afd44d85c64177be54f10, type: 3}
   - {fileID: 21300000, guid: 8b768351d6ca0e04da707ff6e68917b0, type: 3}
   - {fileID: 21300000, guid: a0bc29f1643e17140a9abf9b22745b92, type: 3}
@@ -71,14 +78,23 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 5c9e3c5d5b7bab24baf176b352543a99, type: 3}
   - {fileID: 21300000, guid: 9eddee8d2cc7f8e4cb9f7d616a0f210c, type: 3}
   - {fileID: 21300000, guid: 1accc59e32c8896438f0d9936a6ecc7e, type: 3}
+  - {fileID: 21300000, guid: 589699f75ac9241acb3625f77b592a57, type: 3}
   - {fileID: 21300000, guid: 9e03db5cbfc3aaf418a8a5d3ae4ad12e, type: 3}
   - {fileID: 21300000, guid: b96ca68c2f3e3ad40a8a032b8361ac9b, type: 3}
   - {fileID: 21300000, guid: 13d16f71d1ab5dc429bd7b6a8de223e8, type: 3}
+  - {fileID: 21300000, guid: 24016cfc10e2d491e9f07814341749e5, type: 3}
   - {fileID: 21300000, guid: 0866e845bd3668449b95cfed09b75849, type: 3}
   m_PackedSpriteNamesToIndex:
   - zhuanpan
+  - zhuanpan_xinxidi
+  - zhuanpan_guizetiaoli
+  - zhuanpan_jiangchijiangpin
   - zhizhen
   - zhuanpananniu
+  - zhuanpan_guize0
+  - zhuanpan_jiangchi0
+  - zhuanpan_guize1
+  - zhuanpan_jiangchi1
   - shengxiao_yang1
   - shengxiao_gou1
   - shengxiao_hou1
@@ -104,9 +120,11 @@ SpriteAtlas:
   - shengxiao_hu0
   - shengxiao_she0
   - shengxiao_niu0
+  - zhuanpan_jiangchitishi
   - suo
   - go
   - tishiyu2
+  - zhuanpan_guizetishi
   - jiantou
   m_Tag: Wheel
   m_IsVariant: 0

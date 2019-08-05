@@ -176,9 +176,9 @@ namespace Loxodon.Framework.Configurations
             return GetProperty<string>(key, defaultValue);
         }
 
-        public string GetString(string key, string defaultFormat, params object[] args)
+        public string GetFormattedString(string key, params object[] args)
         {
-            string format = GetString(key, defaultFormat);
+            string format = GetString(key, null);
             if (format == null)
                 return null;
 
@@ -233,7 +233,7 @@ namespace Loxodon.Framework.Configurations
                     return defaultValue;
 
                 List<object> list = new List<object>();
-                string[] items = str.Split(new char[] { ',' });
+                string[] items = StringSpliter.Split(str, ',');
                 foreach (string item in items)
                 {
                     object ret = null;
@@ -294,7 +294,7 @@ namespace Loxodon.Framework.Configurations
                     return defaultValue;
 
                 List<T> list = new List<T>();
-                string[] items = str.Split(new char[] { ',' });
+                string[] items = StringSpliter.Split(str, ',');
                 foreach (string item in items)
                 {
                     T ret = default(T);

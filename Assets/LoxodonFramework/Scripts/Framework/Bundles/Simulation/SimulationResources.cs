@@ -9,7 +9,7 @@ namespace Loxodon.Framework.Bundles
 {
     public class SimulationResources : AbstractResources
     {
-        protected const string ASSETS = "assets/Bundles/";
+        protected const string ASSETS = "Assets/";
 
         public SimulationResources() : this(new SimulationAutoMappingPathInfoParser(), new SimulationBundleManager())
         {
