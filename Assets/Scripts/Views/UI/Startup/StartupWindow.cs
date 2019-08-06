@@ -14,9 +14,9 @@ public class StartupWindow : Window
 {
     private static readonly ILog log = LogManager.GetLogger(typeof(StartupWindow));
 
-    public Text progressBarText;
+    //public Text progressBarText;
     public Slider progressBarSlider;
-    public Text tipText;
+    //public Text tipText;
 
     private StartupViewModel viewModel;
     private IDisposable subscription;
@@ -34,8 +34,8 @@ public class StartupWindow : Window
         bindingSet.Bind(this.progressBarSlider).For("value", "onValueChanged").To("ProgressBar.Progress").TwoWay();
         bindingSet.Bind(this.progressBarSlider.gameObject).For(v=>v.activeSelf).To(vm=>vm.ProgressBar.Enable).OneWay();
         /* expression binding,support only OneWay mode. */
-        bindingSet.Bind(this.progressBarText).For(v => v.text).ToExpression(vm=>string.Format("{0}%", Mathf.FloorToInt(vm.ProgressBar.Progress * 100f))).OneWay();
-        bindingSet.Bind(this.tipText).For(v => v.text).To(vm => vm.ProgressBar.Tip).OneWay();
+        //bindingSet.Bind(this.progressBarText).For(v => v.text).ToExpression(vm=>string.Format("{0}%", Mathf.FloorToInt(vm.ProgressBar.Progress * 100f))).OneWay();
+        //bindingSet.Bind(this.tipText).For(v => v.text).To(vm => vm.ProgressBar.Tip).OneWay();
         bindingSet.Build();
 
         this.viewModel.Download();

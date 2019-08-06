@@ -26,16 +26,19 @@ public class WheelWindow : Window
         }
     }
 
-    public Transform content;
     public Button drawButton;
     public Image drawImage;
 
     public GameObject wheel;
 
-    public Image hintImage;
+    //public Image hintImage;
 
-    public GameObject itemTemplate1;
-    public GameObject itemTemplate2;
+    public GameObject itemTemplate;
+
+    public GameObject left;
+    public GameObject right;
+
+    public Button rule;
 
 
     public WheelItemClickedEvent OnSelectChanged = new WheelItemClickedEvent();
@@ -85,23 +88,25 @@ public class WheelWindow : Window
 
     public virtual void AddItem(int index, object item)
     {
-        GameObject itemViewGo = null;
-        if (index < 6)
-        {
-            itemViewGo = Instantiate(this.itemTemplate1);
-        }
-        else
-        {
-            itemViewGo = Instantiate(this.itemTemplate2);
-        }
+        GameObject itemViewGo = Instantiate(this.itemTemplate);
+        //if (index < 6)
+        //{
+        //    itemViewGo = Instantiate(this.itemTemplate1);
+        //}
+        //else
+        //{
+        //    itemViewGo = Instantiate(this.itemTemplate2);
+        //}
        
-        itemViewGo.transform.SetParent(this.content, false);
+        itemViewGo.transform.SetParent(this.wheel.transform, false);
         itemViewGo.transform.SetSiblingIndex(index);
 
         RectTransform rectTransform = itemViewGo.GetComponent<RectTransform>();
-        int x = (index / 6) <=0?  -750 : 750;
-        int y = 450 - 180 * (index % 6);
-        rectTransform.anchoredPosition = new Vector2(x, y);
+        float dist = 310f;
+        float x = dist * Mathf.Sin(30 * index * Mathf.Deg2Rad);
+        float y = dist * Mathf.Cos(30 * index * Mathf.Deg2Rad);
+        rectTransform.localPosition = new Vector3(x, y, 0);
+        rectTransform.localEulerAngles = new Vector3(0, 0, -30 * index);
 
         Button button = itemViewGo.GetComponent<Button>();
         button.onClick.AddListener(() => OnSelectChange(itemViewGo));
@@ -118,9 +123,9 @@ public class WheelWindow : Window
         {
             return;
         }
-        for (int i = 0; i < this.content.childCount; i++)
+        for (int i = 0; i < this.wheel.transform.childCount; i++)
         {
-            var child = this.content.GetChild(i);
+            var child = this.wheel.transform.GetChild(i);
             if (itemViewGo.transform == child)
             {
                 this.OnSelectChanged.Invoke(i);
@@ -152,7 +157,7 @@ public class WheelWindow : Window
 
         bindingSet.Bind(this.drawImage).For(v => v.sprite).To(vm => vm.DrawIcon).WithConversion("wheelConverter").OneWay();
 
-        bindingSet.Bind(this.hintImage).For(v => v.sprite).To(vm => vm.HintIcon).WithConversion("wheelConverter").OneWay();
+        //bindingSet.Bind(this.hintImage).For(v => v.sprite).To(vm => vm.HintIcon).WithConversion("wheelConverter").OneWay();
 
         bindingSet.Bind().For(v => v.WheelTurn(null, null)).To(vm => vm.WheelTurnRequest);
 
@@ -160,6 +165,26 @@ public class WheelWindow : Window
         bindingSet.Bind().For(v => v.OnOpenCardBagWindow(null, null)).To(vm => vm.CardBagRequest);
 
         bindingSet.Build();
+
+        this.rule.onClick.AddListener(RuleAnimation);
+
+
+    }
+    bool flag = false;
+    private void RuleAnimation()
+    {
+        if (!flag) 
+        {
+            left.transform.DOLocalMoveX(-400, 2f);
+            right.transform.DOLocalMoveX(960, 2f);
+            flag = true;
+        }
+        else {
+            left.transform.DOLocalMoveX(0, 2f);
+            right.transform.DOLocalMoveX(1660, 2f);
+            flag = false;
+        }
+
 
 
     }
