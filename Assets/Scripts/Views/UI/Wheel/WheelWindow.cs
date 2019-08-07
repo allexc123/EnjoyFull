@@ -176,12 +176,12 @@ public class WheelWindow : Window
         if (!flag) 
         {
             left.transform.DOLocalMoveX(-400, 2f);
-            right.transform.DOLocalMoveX(960, 2f);
+            right.transform.DOLocalMoveX(560, 2f);
             flag = true;
         }
         else {
             left.transform.DOLocalMoveX(0, 2f);
-            right.transform.DOLocalMoveX(1660, 2f);
+            right.transform.DOLocalMoveX(1260, 2f);
             flag = false;
         }
 
