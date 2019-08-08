@@ -8,18 +8,6 @@ using Loxodon.Log;
 using System.Collections.Generic;
 
 
-public class Reward
-{
-    //图标
-    public string Icon { get; set; }
-    //名称
-    public string Name { get; set; }
-    //描述
-    public string Desc { get; set; }
-    //表述图标
-    public string DescIcon { get; set; }
-}
-
 public class CardDrawModel : ViewModelBase
 {
 
