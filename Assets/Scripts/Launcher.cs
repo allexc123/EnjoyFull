@@ -67,6 +67,12 @@ namespace LX
             ITask taskContext = new TaskContext();
             container.Register<ITask>(taskContext);
 
+            IAwardRepository awardRepository = new AwardRepository();
+            container.Register<IAwardRepository>(awardRepository);
+
+            IRewardRepository rewardRepository = new RewardRepository();
+            container.Register<IRewardRepository>(rewardRepository);
+
         }
         IEnumerator Start()
         {

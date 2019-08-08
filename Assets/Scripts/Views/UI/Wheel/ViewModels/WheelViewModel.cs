@@ -102,9 +102,6 @@ public class WheelViewModel : ViewModelBase
         this.DrawIcon = "suo";
         this.HintIcon = "tishiyu1";
 
-        
-
-
     }
 
     public ObservableList<WheelItemViewModel> Items
