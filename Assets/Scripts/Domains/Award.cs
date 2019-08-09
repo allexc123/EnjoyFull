@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Loxodon.Framework.Observables;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Award
+public class Award: ObservableObject
 {
     private string name;
     private int count;
@@ -11,18 +12,18 @@ public class Award
     public string Name
     {
         get { return this.name; }
-        set { this.name = value; }
+        set { Set<string>(ref this.name, value, "Name"); }
     }
 
     public int Count
     {
         get { return this.count; }
-        set { this.count = value; }
+        set { Set<int>(ref this.count, value, "Count"); }
     }
 
     public int Quality
     {
         get { return this.quality; }
-        set { this.quality = value; }
+        set { Set<int>(ref this.quality, value, "Quality"); }
     }
 }

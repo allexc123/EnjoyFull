@@ -7,5 +7,7 @@ public interface IRewardRepository {
 
     IAsyncResult<List<Reward>> Get();
 
+    IAsyncResult<List<Award>> GetAwards();
+
     void Clear();
 }
