@@ -40,6 +40,8 @@ public class WheelWindow : Window
 
     public Button rule;
 
+    public AwardView awardView;
+
 
     public WheelItemClickedEvent OnSelectChanged = new WheelItemClickedEvent();
 
@@ -64,6 +66,9 @@ public class WheelWindow : Window
                 this.items.CollectionChanged += OnCollectionChanged;
         }
     }
+
+    public static ILog Log => log;
+
     protected void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
     {
         switch (eventArgs.Action)
@@ -163,10 +168,14 @@ public class WheelWindow : Window
 
 
         bindingSet.Bind().For(v => v.OnOpenCardBagWindow(null, null)).To(vm => vm.CardBagRequest);
+        bindingSet.Bind(this.awardView).For(v => v.Awards).To(vm => vm.Awards).OneWay();
 
         bindingSet.Build();
 
         this.rule.onClick.AddListener(RuleAnimation);
+
+        WheelViewModel wheelViewModel = this.GetDataContext() as WheelViewModel;
+        wheelViewModel.LoadAward();
 
 
     }
@@ -223,20 +232,8 @@ public class WheelWindow : Window
         {
             IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
             CardBagWindow cardBagWindow = viewLocator.LoadWindow<CardBagWindow>(this.WindowManager, "UI/CardBag");
-            //var callback = args.Callback;
             var cardBagModel = args.Context;
 
-            //if (callback != null)
-            //{
-            //    EventHandler handler = null;
-            //    handler = (window, e) =>
-            //    {
-            //        cardBagWindow.OnDismissed -= handler;
-            //        if (callback != null)
-            //            callback();
-            //    };
-            //    cardBagWindow.OnDismissed += handler;
-            //}
 
             cardBagWindow.SetDataContext(cardBagModel);
             cardBagWindow.Create();

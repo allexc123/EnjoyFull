@@ -1,5 +1,6 @@
 ﻿
 
+using Loxodon.Framework.Asynchronous;
 using Loxodon.Framework.Commands;
 using Loxodon.Framework.Contexts;
 using Loxodon.Framework.Interactivity;
@@ -14,9 +15,10 @@ using UnityEngine;
 
 public class WheelViewModel : ViewModelBase
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(MessageDispatcher));
+    private static readonly ILog log = LogManager.GetLogger(typeof(WheelViewModel));
 
     private readonly ObservableList<WheelItemViewModel> items = new ObservableList<WheelItemViewModel>();
+    private ObservableList<AwardItemViewModel> awards = new ObservableList<AwardItemViewModel>();
 
     private SimpleCommand drawCommand;
 
@@ -88,12 +90,24 @@ public class WheelViewModel : ViewModelBase
 
         this.drawCommand = new SimpleCommand(()=> {
             drawCommand.Enabled = false;
-            wheelTurnRequest.Raise(wheelIndex, (int index)=> {
+            System.Random random = new System.Random();
+            int idx = random.Next(12);
+            wheelTurnRequest.Raise(idx, (int index)=> {
                 drawCommand.Enabled = true;
 
-                CardBagViewModel cardBagViewModel = new CardBagViewModel();
+                WheelItemViewModel wheelItemViewModel = items[idx];
+                if (wheelIndex != idx)
+                {
+                    wheelItemViewModel.ChangeIcon();
+                    count++;
+                    LoadAward();
+                }
+               
 
-                cardBagRequest.Raise(cardBagViewModel);
+                //CardBagViewModel cardBagViewModel = new CardBagViewModel();
+
+                //cardBagRequest.Raise(cardBagViewModel);
+
             });
 
         });
@@ -102,11 +116,6 @@ public class WheelViewModel : ViewModelBase
         this.DrawIcon = "suo";
         this.HintIcon = "tishiyu1";
 
-    }
-
-    public ObservableList<WheelItemViewModel> Items
-    {
-        get { return this.items; }
     }
 
     public void AddItem()
@@ -133,13 +142,59 @@ public class WheelViewModel : ViewModelBase
 
             WheelItemViewModel itemViewModel = Items[i];
             itemViewModel.Command.Enabled = false;
-            itemViewModel.ChangeIcon();
+            //itemViewModel.ChangeIcon();
 
             this.HintIcon = "tishiyu2";
 
         }
         this.DrawIcon = "go";
         drawCommand.Enabled = true;
+    }
+    int count = 0;
+
+    public void LoadAward()
+    {
+        Awards.Clear();
+        ApplicationContext context = Context.GetApplicationContext();
+
+        IRewardRepository rewardRepository = context.GetService<IRewardRepository>();
+
+        IAsyncResult<List<Award>> result = rewardRepository.GetAwards();
+        List<Award> awardList = result.Synchronized().WaitForResult();
+        int i = 0;
+        foreach (Award award in awardList)
+        {
+            if (i > count)
+            {
+                return;
+            }
+            i++;
+            AwardItemViewModel awardItemViewModel = new AwardItemViewModel();
+            if (award.Quality == 5)
+            {
+                awardItemViewModel.Name = $"<color=#FF7F00>{award.Name}  {award.Count}</color>";
+            }
+            else if (award.Quality == 4)
+            {
+                awardItemViewModel.Name = $"<color=#8B00FF>{award.Name}  {award.Count}</color>";
+            }
+            else
+            {
+                awardItemViewModel.Name = $"<color=#00FF00>{award.Name}  {award.Count}</color>";
+            }
+
+            this.awards.Add(awardItemViewModel);
+        }
+
+    }
+
+    public ObservableList<WheelItemViewModel> Items
+    {
+        get { return this.items; }
+    }
+    public ObservableList<AwardItemViewModel> Awards
+    {
+        get { return this.awards; }
     }
 
     public ICommand DrawCommand

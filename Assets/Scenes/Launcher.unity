@@ -178,7 +178,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &373760738
+--- !u!1001 &304008506
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -275,34 +275,14 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114967492354652156, guid: 65d81f8c80235b440b484d652ab74ad6,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114967492354652156, guid: 65d81f8c80235b440b484d652ab74ad6,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114967492354652156, guid: 65d81f8c80235b440b484d652ab74ad6,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224521425104778752, guid: 65d81f8c80235b440b484d652ab74ad6,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 70
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65d81f8c80235b440b484d652ab74ad6, type: 2}
   m_IsPrefabParent: 0
---- !u!224 &373760739 stripped
+--- !u!224 &304008507 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224084782247678354, guid: 65d81f8c80235b440b484d652ab74ad6,
     type: 2}
-  m_PrefabInternal: {fileID: 373760738}
+  m_PrefabInternal: {fileID: 304008506}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,7 +466,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 373760739}
+  - {fileID: 304008507}
   m_Father: {fileID: 1812687714}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
