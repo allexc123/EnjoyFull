@@ -67,8 +67,6 @@ public class WheelWindow : Window
         }
     }
 
-    public static ILog Log => log;
-
     protected void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
     {
         switch (eventArgs.Action)
