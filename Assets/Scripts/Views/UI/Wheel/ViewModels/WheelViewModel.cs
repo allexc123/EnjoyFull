@@ -18,7 +18,6 @@ public class WheelViewModel : ViewModelBase
     private static readonly ILog log = LogManager.GetLogger(typeof(WheelViewModel));
 
     private readonly ObservableList<WheelItemViewModel> items = new ObservableList<WheelItemViewModel>();
-    private ObservableList<AwardItemViewModel> awards = new ObservableList<AwardItemViewModel>();
 
     private SimpleCommand drawCommand;
 
@@ -31,7 +30,12 @@ public class WheelViewModel : ViewModelBase
 
     private int wheelIndex = 0;
 
+    private AwardViewModel awardViewModel;
+
     //IDisposable disposable;
+
+
+    private IRewardRepository rewardRepository;
 
     public WheelViewModel()
     {
@@ -88,19 +92,29 @@ public class WheelViewModel : ViewModelBase
 
         this.cardBagRequest = new InteractionRequest<CardBagViewModel>(this);
 
+        //测试数据
+        for (int i = 0; i < 12; i++)
+        {
+            idxs.Add(i);
+        }
+
         this.drawCommand = new SimpleCommand(()=> {
             drawCommand.Enabled = false;
-            System.Random random = new System.Random();
-            int idx = random.Next(12);
+
+            rewardRepository.AddTurnCount();
+            awardViewModel.LoadAward();
+
+            int idx = draw();
             wheelTurnRequest.Raise(idx, (int index)=> {
                 drawCommand.Enabled = true;
 
                 WheelItemViewModel wheelItemViewModel = items[idx];
                 if (wheelIndex != idx)
                 {
+                    probability = probability + 10;
                     wheelItemViewModel.ChangeIcon();
-                    count++;
-                    LoadAward();
+                  
+                    //LoadAward();
                 }
                
 
@@ -116,7 +130,35 @@ public class WheelViewModel : ViewModelBase
         this.DrawIcon = "suo";
         this.HintIcon = "tishiyu1";
 
+        this.awardViewModel = new AwardViewModel();
+        awardViewModel.LoadAward();
+
+        ApplicationContext context = Context.GetApplicationContext();
+        rewardRepository = context.GetService<IRewardRepository>();
+
     }
+    List<int> idxs = new List<int>();
+    private int probability =30;
+    private int draw()
+    {
+        System.Random random = new System.Random();
+        int rand= random.Next(100);
+        if (rand < probability)
+        {
+            return wheelIndex;
+        }
+        else
+        {
+            int idx = random.Next(idxs.Count-1);
+            int data = idxs[idx];
+            idxs.Remove(data);
+            return data;
+        }
+
+       
+    }
+
+    
 
     public void AddItem()
     {
@@ -150,52 +192,14 @@ public class WheelViewModel : ViewModelBase
         this.DrawIcon = "go";
         drawCommand.Enabled = true;
     }
-    int count = 0;
 
-    public void LoadAward()
-    {
-        Awards.Clear();
-        ApplicationContext context = Context.GetApplicationContext();
-
-        IRewardRepository rewardRepository = context.GetService<IRewardRepository>();
-
-        IAsyncResult<List<Award>> result = rewardRepository.GetAwards();
-        List<Award> awardList = result.Synchronized().WaitForResult();
-        int i = 0;
-        foreach (Award award in awardList)
-        {
-            if (i > count)
-            {
-                return;
-            }
-            i++;
-            AwardItemViewModel awardItemViewModel = new AwardItemViewModel();
-            if (award.Quality == 5)
-            {
-                awardItemViewModel.Name = $"<color=#FF7F00>{award.Name}  {award.Count}</color>";
-            }
-            else if (award.Quality == 4)
-            {
-                awardItemViewModel.Name = $"<color=#8B00FF>{award.Name}  {award.Count}</color>";
-            }
-            else
-            {
-                awardItemViewModel.Name = $"<color=#00FF00>{award.Name}  {award.Count}</color>";
-            }
-
-            this.awards.Add(awardItemViewModel);
-        }
-
-    }
+    
 
     public ObservableList<WheelItemViewModel> Items
     {
         get { return this.items; }
     }
-    public ObservableList<AwardItemViewModel> Awards
-    {
-        get { return this.awards; }
-    }
+    
 
     public ICommand DrawCommand
     {
@@ -220,6 +224,11 @@ public class WheelViewModel : ViewModelBase
     public InteractionRequest<CardBagViewModel> CardBagRequest
     {
         get { return this.cardBagRequest; }
+    }
+
+    public AwardViewModel AwardViewModel
+    {
+        get { return this.awardViewModel; }
     }
 
     ~WheelViewModel()

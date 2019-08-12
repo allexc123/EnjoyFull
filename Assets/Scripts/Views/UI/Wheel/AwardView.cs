@@ -42,11 +42,11 @@ public class AwardView : UIView
         //AwardViewModel awardModel = new AwardViewModel();
         //this.SetDataContext(awardModel);
 
-        //BindingSet<AwardView, AwardViewModel> bindingSet = this.CreateBindingSet<AwardView, AwardViewModel>();
+        BindingSet<AwardView, AwardViewModel> bindingSet = this.CreateBindingSet<AwardView, AwardViewModel>();
 
-        //bindingSet.Bind(this).For(v => v.Awards).To(vm => vm.Awards).OneWay();
+        bindingSet.Bind(this).For(v => v.Awards).To(vm => vm.Awards).OneWay();
 
-        //bindingSet.Build();
+        bindingSet.Build();
 
         //awardModel.LoadAward();
 

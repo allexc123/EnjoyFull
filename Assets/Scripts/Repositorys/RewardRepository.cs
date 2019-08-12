@@ -4,6 +4,7 @@ using Loxodon.Framework.Asynchronous;
 using Loxodon.Framework.Execution;
 using UnityEngine;
 
+
 public class RewardRepository : IRewardRepository
 {
     //奖品信息
@@ -13,6 +14,8 @@ public class RewardRepository : IRewardRepository
 
     private IThreadExecutor executor;
 
+    private int turnCount = 0;
+
     public RewardRepository()
     {
         executor = new ThreadExecutor();
@@ -20,15 +23,15 @@ public class RewardRepository : IRewardRepository
         Award award1 = new Award();
         award1.Name = "海底捞免单券";
         award1.Count = 1;
-        award1.Quality = 5;
+        award1.Quality = (int)QualityType.Orange;
         Award award2 = new Award();
         award2.Name = "肯德基全家桶";
         award2.Count = 1;
-        award2.Quality = 4;
+        award2.Quality = (int)QualityType.Purple;
         Award award3 = new Award();
         award3.Name = "小豆面馆油条";
         award3.Count = 5;
-        award3.Quality = 3;
+        award3.Quality = (int)QualityType.Blue;
 
         awardCache.Add(award1);
         awardCache.Add(award2);
@@ -49,7 +52,25 @@ public class RewardRepository : IRewardRepository
     public IAsyncResult<List<Award>> GetAwards()
     {
         return executor.Execute(() =>{
-            return this.awardCache;
+            List<Award> result = new List<Award>();
+            int count = 0;
+            foreach (Award award in awardCache)
+            {
+                result.Add(award);
+                count++;
+                if (this.turnCount < count)
+                {
+                    break;
+                }
+                
+               
+            }
+            return result;
         });
+    }
+
+    public void AddTurnCount()
+    {
+        this.turnCount++;
     }
 }

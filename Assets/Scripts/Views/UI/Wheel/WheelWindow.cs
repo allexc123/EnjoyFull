@@ -168,14 +168,16 @@ public class WheelWindow : Window
 
 
         bindingSet.Bind().For(v => v.OnOpenCardBagWindow(null, null)).To(vm => vm.CardBagRequest);
-        bindingSet.Bind(this.awardView).For(v => v.Awards).To(vm => vm.Awards).OneWay();
+        //bindingSet.Bind(this.awardView).For(v => v.Awards).To(vm => vm.Awards).OneWay();
 
         bindingSet.Build();
 
         this.rule.onClick.AddListener(RuleAnimation);
 
+
+
         WheelViewModel wheelViewModel = this.GetDataContext() as WheelViewModel;
-        wheelViewModel.LoadAward();
+        this.awardView.BindingContext().DataContext = wheelViewModel.AwardViewModel;
 
 
     }
