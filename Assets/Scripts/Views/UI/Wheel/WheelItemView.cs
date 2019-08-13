@@ -13,7 +13,7 @@ public class WheelItemView : UIView
     protected override void Start()
     {
         BindingSet<WheelItemView, WheelItemViewModel> bindingSet = this.CreateBindingSet<WheelItemView, WheelItemViewModel>();
-        bindingSet.Bind(this.image).For(v => v.sprite).To(vm => vm.Icon).WithConversion("wheelConverter").OneWay();
+        bindingSet.Bind(this.image).For(v => v.sprite).To(vm => vm.NormalIcon).WithConversion("wheelConverter").OneWay();
         bindingSet.Bind(this.handImage).For(v => v.activeSelf).To(vm => vm.ShowHand).TwoWay();
 
         bindingSet.Bind(this.button).For(v => v.onClick).To(vm => vm.Command).OneWay();

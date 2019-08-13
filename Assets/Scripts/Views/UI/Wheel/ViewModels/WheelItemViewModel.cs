@@ -27,13 +27,13 @@ public class WheelItemViewModel : ViewModelBase
         });
     }
 
-    public string Icon
+    public string NormalIcon
     {
         get { return this.icon; }
-        set { this.Set<string>(ref icon, value, "Icon"); }
+        set { this.Set<string>(ref icon, value, "NormalIcon"); }
     }
 
-    public string Icon1 { get; set; }
+    public string DisabledIcon { get; set; }
 
     public SimpleCommand Command
     {
@@ -48,6 +48,6 @@ public class WheelItemViewModel : ViewModelBase
 
     public void ChangeIcon()
     {
-        this.Icon = Icon1;
+        this.NormalIcon = DisabledIcon;
     }
 }
