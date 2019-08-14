@@ -9,7 +9,11 @@ public interface IRewardRepository {
 
     IAsyncResult<List<Award>> GetAwards();
 
-    void AddTurnCount();
+    void AddDrawCount();
+
+    int GetDrawCount();
+
+    int GetMoney();
 
     void Clear();
 }

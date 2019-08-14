@@ -28,6 +28,10 @@ public class WheelViewModel : ViewModelBase
 
     private InteractionRequest<CardBagViewModel> cardBagRequest;
 
+    private InteractionRequest<DrawDialogNotification> drawDialogRequest;
+
+    private InteractionRequest dismissRequest;
+
     private int wheelIndex = 0;
 
     private AwardViewModel awardViewModel;
@@ -92,6 +96,10 @@ public class WheelViewModel : ViewModelBase
 
         this.cardBagRequest = new InteractionRequest<CardBagViewModel>(this);
 
+        this.drawDialogRequest = new InteractionRequest<DrawDialogNotification>(this);
+
+        this.dismissRequest = new InteractionRequest(this);
+
         //测试数据
         for (int i = 0; i < 12; i++)
         {
@@ -101,7 +109,7 @@ public class WheelViewModel : ViewModelBase
         this.drawCommand = new SimpleCommand(()=> {
             drawCommand.Enabled = false;
 
-            rewardRepository.AddTurnCount();
+            rewardRepository.AddDrawCount();
             awardViewModel.LoadAward();
 
             int idx = draw();
@@ -111,10 +119,26 @@ public class WheelViewModel : ViewModelBase
                 WheelItemViewModel wheelItemViewModel = items[idx];
                 if (wheelIndex != idx)
                 {
-                    probability = probability + 10;
-                    wheelItemViewModel.ChangeIcon();
-                  
+                    //probability = probability + 10;
+                    //wheelItemViewModel.ChangeIcon();
+
                     //LoadAward();
+
+                    DrawDialogNotification drawDialogNotification = new DrawDialogNotification();
+
+                    Action<DrawDialogNotification> callback = n => {
+                        if (DrawDialog.BUTTON_POSITIVE == n.DialogResult)
+                        {
+                            probability = probability + 10;
+                            wheelItemViewModel.ChangeIcon();
+
+                        }
+                        else if (DrawDialog.BUTTON_NEGATIVE == n.DialogResult)
+                        {
+                            dismissRequest.Raise();
+                        }
+                    };
+                    this.drawDialogRequest.Raise(drawDialogNotification, callback);
                 }
                
 
@@ -135,6 +159,7 @@ public class WheelViewModel : ViewModelBase
 
         ApplicationContext context = Context.GetApplicationContext();
         rewardRepository = context.GetService<IRewardRepository>();
+
 
     }
     List<int> idxs = new List<int>();
@@ -229,6 +254,15 @@ public class WheelViewModel : ViewModelBase
     public AwardViewModel AwardViewModel
     {
         get { return this.awardViewModel; }
+    }
+    public InteractionRequest<DrawDialogNotification> DrawDialogRequest
+    {
+        get { return this.drawDialogRequest; }
+    }
+
+    public IInteractionRequest DismissRequest
+    {
+        get { return this.dismissRequest; }
     }
 
     ~WheelViewModel()

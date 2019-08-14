@@ -168,6 +168,9 @@ public class WheelWindow : Window
         bindingSet.Bind().For(v => v.OnOpenCardBagWindow(null, null)).To(vm => vm.CardBagRequest);
         //bindingSet.Bind(this.awardView).For(v => v.Awards).To(vm => vm.Awards).OneWay();
 
+        bindingSet.Bind().For(v => v.OnOpenDrawDialog(null, null)).To(vm => vm.DrawDialogRequest);
+        bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
+
         bindingSet.Build();
 
         this.rule.onClick.AddListener(RuleAnimation);
@@ -193,8 +196,6 @@ public class WheelWindow : Window
             right.transform.DOLocalMoveX(1260, 2f);
             flag = false;
         }
-
-
 
     }
 
@@ -225,6 +226,10 @@ public class WheelWindow : Window
 
         
     }
+    protected void OnDismissRequest(object sender, InteractionEventArgs args)
+    {
+        this.Dismiss();
+    }
 
     protected void OnOpenCardBagWindow(object sender, InteractionEventArgs args)
     {
@@ -254,5 +259,18 @@ public class WheelWindow : Window
         payView.Show();
     }
 
+    private void OnOpenDrawDialog(object sender, InteractionEventArgs args)
+    {
+        DrawDialogNotification notification = args.Context as DrawDialogNotification;
+        var callback = args.Callback;
+
+        DrawDialog.ShowDrawDialog((result) => {
+            notification.DialogResult = result;
+            if (callback != null)
+            {
+                callback();
+            }
+        });
+    }
 
 }

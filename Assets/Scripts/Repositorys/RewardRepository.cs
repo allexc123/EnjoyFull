@@ -14,12 +14,14 @@ public class RewardRepository : IRewardRepository
 
     private IThreadExecutor executor;
 
-    private int turnCount = 0;
+    private int drawCount = 0;
+    private int money = 0;
 
     public RewardRepository()
     {
         executor = new ThreadExecutor();
 
+        money = 5;
         Award award1 = new Award();
         award1.Name = "海底捞免单券";
         award1.Count = 1;
@@ -58,7 +60,7 @@ public class RewardRepository : IRewardRepository
             {
                 result.Add(award);
                 count++;
-                if (this.turnCount < count)
+                if (this.drawCount < count)
                 {
                     break;
                 }
@@ -69,8 +71,18 @@ public class RewardRepository : IRewardRepository
         });
     }
 
-    public void AddTurnCount()
+    public void AddDrawCount()
     {
-        this.turnCount++;
+        this.drawCount++;
+    }
+
+    public int GetDrawCount()
+    {
+        return this.drawCount;
+    }
+
+    public int GetMoney()
+    {
+        return (money - drawCount) < 1 ? 1 : (money - drawCount);
     }
 }

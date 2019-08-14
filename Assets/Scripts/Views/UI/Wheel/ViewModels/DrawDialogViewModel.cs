@@ -6,6 +6,7 @@ using Loxodon.Framework.Binding;
 using Loxodon.Framework.Binding.Builder;
 using Loxodon.Framework.Commands;
 using Loxodon.Framework.Contexts;
+using Loxodon.Framework.Interactivity;
 using Loxodon.Framework.Observables;
 using Loxodon.Framework.ViewModels;
 using Loxodon.Framework.Views;
@@ -19,8 +20,10 @@ public class DrawDialogViewModel : ViewModelBase
 
     private ICommand cancelCommand;
 
+    private InteractionRequest dismissRequest;
+
     private int countDown;
-    private int pay;
+    private int money;
     private int drawCount;
 
     protected bool closed;
@@ -33,6 +36,18 @@ public class DrawDialogViewModel : ViewModelBase
 
         ApplicationContext context = Context.GetApplicationContext();
         rewardRepository = context.GetService<IRewardRepository>();
+
+        this.dismissRequest = new InteractionRequest(this);
+
+        confirmCommand = new SimpleCommand(()=> {
+            this.OnClick(DrawDialog.BUTTON_POSITIVE);
+        });
+        cancelCommand = new SimpleCommand(() => {
+            this.OnClick(DrawDialog.BUTTON_NEGATIVE);
+        });
+
+        this.DrawCount = rewardRepository.GetDrawCount();
+        this.Money = rewardRepository.GetMoney();
     }
 
     public ICommand ConfirmCommand
@@ -50,10 +65,10 @@ public class DrawDialogViewModel : ViewModelBase
         get { return countDown; }
         set { this.Set<int>(ref this.countDown, value, "CountDown"); }
     }
-    public int Pay
+    public int Money
     {
-        get { return pay; }
-        set { this.Set<int>(ref this.pay, value, "Pay"); }
+        get { return money; }
+        set { this.Set<int>(ref this.money, value, "Pay"); }
     }
     public int DrawCount
     {
@@ -92,6 +107,12 @@ public class DrawDialogViewModel : ViewModelBase
         finally
         {
             this.Closed = true;
+            this.dismissRequest.Raise();
         }
+    }
+
+    public IInteractionRequest DismissRequest
+    {
+        get { return this.dismissRequest; }
     }
 }

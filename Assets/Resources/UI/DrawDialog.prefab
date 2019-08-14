@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 222401677522164454}
   - component: {fileID: 114854486952190802}
   m_Layer: 5
-  m_Name: Text
+  m_Name: CountDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,7 +132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1527425387322566
 GameObject:
   m_ObjectHideFlags: 1
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 222662846855069606}
   - component: {fileID: 114251515345329886}
   m_Layer: 5
-  m_Name: Text
+  m_Name: DrawCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 222969796068587896}
   - component: {fileID: 114514656287956694}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,7 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   windowType: 2
   countDown: {fileID: 114854486952190802}
-  pay: {fileID: 114514656287956694}
+  money: {fileID: 114514656287956694}
   drawCount: {fileID: 114251515345329886}
   ConfirmButton: {fileID: 114652800402152050}
   CancelButton: {fileID: 114972964476006788}
