@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class DrawDialogWindow : Window
 {
 
-    public Text countDown;
+    //public Text countDown;
     public Text money;
     public Text drawCount;
 
@@ -19,6 +19,8 @@ public class DrawDialogWindow : Window
     public Button CancelButton;
 
     public Button OutsideButton;
+
+    public CountDownView countDownView;
 
     public DrawDialogViewModel viewModel;
 
@@ -30,8 +32,11 @@ public class DrawDialogWindow : Window
         bindingSet.Bind(this.ConfirmButton).For(v => v.onClick).To(vm => vm.ConfirmCommand).OneWay();
         bindingSet.Bind(this.CancelButton).For(v => v.onClick).To(vm => vm.CancelCommand).OneWay();
         bindingSet.Bind(this.OutsideButton).For(v => v.onClick).To(vm => vm.CancelCommand).OneWay();
+        bindingSet.Bind(this.countDownView).For(v => v.OnFinish).To(vm => vm.CancelCommand).OneWay();
+        bindingSet.Bind(this.countDownView).For(v => v.CountDown).To(vm => vm.CountDown).OneWay();
 
-        bindingSet.Bind(this.countDown).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.CountDown)).OneWay();
+
+        //bindingSet.Bind(this.countDown).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.CountDown)).OneWay();
         bindingSet.Bind(this.money).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.Money)).OneWay();
         bindingSet.Bind(this.drawCount).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.DrawCount)).OneWay();
 

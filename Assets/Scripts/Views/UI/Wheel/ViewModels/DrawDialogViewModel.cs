@@ -30,8 +30,9 @@ public class DrawDialogViewModel : ViewModelBase
     protected int result;
     protected Action<int> click;
 
-    public DrawDialogViewModel(Action<int> afterHideCallback) : base()
+    public DrawDialogViewModel(int countDown, Action<int> afterHideCallback) : base()
     {
+        this.countDown = countDown;
         this.Click = afterHideCallback;
 
         ApplicationContext context = Context.GetApplicationContext();
@@ -63,7 +64,7 @@ public class DrawDialogViewModel : ViewModelBase
     public int CountDown
     {
         get { return countDown; }
-        set { this.Set<int>(ref this.countDown, value, "CountDown"); }
+        //set { this.Set<int>(ref this.countDown, value, "CountDown"); }
     }
     public int Money
     {

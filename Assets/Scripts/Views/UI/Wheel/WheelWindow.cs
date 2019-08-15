@@ -264,7 +264,7 @@ public class WheelWindow : Window
         DrawDialogNotification notification = args.Context as DrawDialogNotification;
         var callback = args.Callback;
 
-        DrawDialog.ShowDrawDialog((result) => {
+        DrawDialog.ShowDrawDialog(notification.CountDown, (result) => {
             notification.DialogResult = result;
             if (callback != null)
             {

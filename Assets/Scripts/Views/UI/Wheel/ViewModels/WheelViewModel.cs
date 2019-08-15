@@ -125,6 +125,7 @@ public class WheelViewModel : ViewModelBase
                     //LoadAward();
 
                     DrawDialogNotification drawDialogNotification = new DrawDialogNotification();
+                    drawDialogNotification.CountDown = 30;
 
                     Action<DrawDialogNotification> callback = n => {
                         if (DrawDialog.BUTTON_POSITIVE == n.DialogResult)

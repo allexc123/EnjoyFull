@@ -56,10 +56,11 @@ public class DrawDialog : IDialog
         this.viewModel = viewModel;
     }
 
-    public static DrawDialog ShowDrawDialog(Action<int> afterHideCallback)
+    public static DrawDialog ShowDrawDialog(int countDown, Action<int> afterHideCallback)
     {
 
-        DrawDialogViewModel viewModel = new DrawDialogViewModel(afterHideCallback);
+        DrawDialogViewModel viewModel = new DrawDialogViewModel(countDown, afterHideCallback);
+        ///viewModel.DrawCount = 20;
 
         ApplicationContext context = Context.GetApplicationContext();
         IUIViewLocator locator = context.GetService<IUIViewLocator>();
@@ -87,10 +88,17 @@ public class DrawDialog : IDialog
 public class DrawDialogNotification
 {
     private int dialogResult;
+    private int countDown;
 
     public int DialogResult
     {
         get { return this.dialogResult; }
         set { this.dialogResult = value; }
+    }
+
+    public int CountDown
+    {
+        get { return this.countDown; }
+        set { this.countDown = value; }
     }
 }
