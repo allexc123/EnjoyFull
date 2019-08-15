@@ -64,7 +64,7 @@ public class DrawDialogViewModel : ViewModelBase
     public int CountDown
     {
         get { return countDown; }
-        //set { this.Set<int>(ref this.countDown, value, "CountDown"); }
+        set { this.Set<int>(ref this.countDown, value, "CountDown"); }
     }
     public int Money
     {

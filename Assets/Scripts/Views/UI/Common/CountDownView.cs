@@ -55,7 +55,14 @@ public class CountDownView : MonoBehaviour
     public float CountDown
     {
         get { return this.countDown; }
-        set { this.countDown = value; isStart = true; }
+        set 
+        {
+            if (value <= 0) return;
+
+            this.countDown = value; 
+            isStart = true; 
+
+        }
     }
 
 }
