@@ -15,5 +15,13 @@ public interface IRewardRepository {
 
     int GetMoney();
 
+    int Probability();
+
+    string QRCode();
+
+    void SetSelectIndex(int index);
+
+    int GetDrawIndex();
+
     void Clear();
 }

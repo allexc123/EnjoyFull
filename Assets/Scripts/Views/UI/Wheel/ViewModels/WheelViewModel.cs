@@ -100,11 +100,7 @@ public class WheelViewModel : ViewModelBase
 
         this.dismissRequest = new InteractionRequest(this);
 
-        //测试数据
-        for (int i = 0; i < 12; i++)
-        {
-            idxs.Add(i);
-        }
+        
 
         this.drawCommand = new SimpleCommand(()=> {
             drawCommand.Enabled = false;
@@ -112,7 +108,7 @@ public class WheelViewModel : ViewModelBase
             rewardRepository.AddDrawCount();
             awardViewModel.LoadAward();
 
-            int idx = draw();
+            int idx = rewardRepository.GetDrawIndex();
             wheelTurnRequest.Raise(idx, (int index)=> {
                 drawCommand.Enabled = true;
 
@@ -130,7 +126,6 @@ public class WheelViewModel : ViewModelBase
                     Action<DrawDialogNotification> callback = n => {
                         if (DrawDialog.BUTTON_POSITIVE == n.DialogResult)
                         {
-                            probability = probability + 10;
                             wheelItemViewModel.ChangeIcon();
 
                         }
@@ -163,27 +158,7 @@ public class WheelViewModel : ViewModelBase
 
 
     }
-    List<int> idxs = new List<int>();
-    private int probability =30;
-    private int draw()
-    {
-        System.Random random = new System.Random();
-        int rand= random.Next(100);
-        if (rand < probability)
-        {
-            return wheelIndex;
-        }
-        else
-        {
-            int idx = random.Next(idxs.Count-1);
-            int data = idxs[idx];
-            idxs.Remove(data);
-            return data;
-        }
-
-       
-    }
-
+    
     
 
     public void AddItem()

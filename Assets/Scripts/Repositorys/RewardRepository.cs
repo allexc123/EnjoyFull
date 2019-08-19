@@ -14,8 +14,16 @@ public class RewardRepository : IRewardRepository
 
     private IThreadExecutor executor;
 
+    //抽奖次数
     private int drawCount = 0;
+    //需要的钱
     private int money = 0;
+    //概率
+    private int probability = 3;
+    //付款二维码
+    private string qrCode;
+    //选择的转盘下标
+    private int selectIndex;
 
     public RewardRepository()
     {
@@ -38,6 +46,13 @@ public class RewardRepository : IRewardRepository
         awardCache.Add(award1);
         awardCache.Add(award2);
         awardCache.Add(award3);
+
+
+        //测试数据
+        for (int i = 0; i < 12; i++)
+        {
+            idxs.Add(i);
+        }
     }
 
     public virtual IAsyncResult<List<Reward>> Get()
@@ -49,6 +64,8 @@ public class RewardRepository : IRewardRepository
     public virtual void Clear()
     {
         this.rewards.Clear();
+        probability = 3;
+        selectIndex = 0;
     }
 
     public IAsyncResult<List<Award>> GetAwards()
@@ -85,4 +102,46 @@ public class RewardRepository : IRewardRepository
     {
         return (money - drawCount) < 1 ? 1 : (money - drawCount);
     }
+
+    public int Probability()
+    {
+        return this.probability;
+    }
+
+    public string QRCode()
+    {
+        return this.qrCode;
+    }
+    public void SetSelectIndex(int index)
+    {
+        this.selectIndex = index;
+    }
+
+    public int GetDrawIndex()
+    {
+        return draw();
+    }
+
+    //测试代码
+    List<int> idxs = new List<int>();
+    private int draw()
+    {
+        System.Random random = new System.Random();
+        int rand = random.Next(100);
+        if (rand < probability)
+        {
+            return selectIndex;
+        }
+        else
+        {
+            int idx = random.Next(idxs.Count - 1);
+            int data = idxs[idx];
+            idxs.Remove(data);
+            return data;
+        }
+
+
+    }
+
+
 }
