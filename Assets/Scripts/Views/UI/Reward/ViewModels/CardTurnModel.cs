@@ -1,4 +1,5 @@
 ﻿using Loxodon.Framework.Asynchronous;
+using Loxodon.Framework.Commands;
 using Loxodon.Framework.Contexts;
 using Loxodon.Framework.Execution;
 using Loxodon.Framework.Interactivity;
@@ -8,7 +9,7 @@ using Loxodon.Log;
 using System.Collections.Generic;
 
 
-public class CardDrawModel : ViewModelBase
+public class CardTurnModel : ViewModelBase
 {
 
     private static readonly ILog log = LogManager.GetLogger(typeof(CardBagViewModel));
@@ -17,15 +18,16 @@ public class CardDrawModel : ViewModelBase
 
     private InteractionRequest<RewardViewModel> openRewardRequest;
 
+    private ICommand closeCardBagCommand;
+
     private int openCount = 0;
     private int openFinish = 0;
 
     private List<Reward> rewards = new List<Reward>();
 
     private int countDown = 20;
-    private IAsyncResult result;
 
-    public CardDrawModel() : base()
+    public CardTurnModel() : base()
     {
         for (int i = 0; i < 9; i++)
         {
@@ -56,24 +58,15 @@ public class CardDrawModel : ViewModelBase
 
         this.openFinish = this.openCount = rewards.Count;
 
+        closeCardBagCommand = new SimpleCommand(() => {
+            CloseCardBag();
+        });
 
-        ApplicationContext context = Context.GetApplicationContext();
-        ITask task = context.GetService<ITask>();
-        
-        this.result = task.Scheduled.ScheduleAtFixedRate(() =>
-        {
-            CountDown--;
-            if (countDown <= 0)
-            {
-                CloseCardBag();
-            }
-
-        }, 1000, 1000);
+        countDown = 10;
     }
 
     private void CloseCardBag()
     {
-        this.result.Cancel();
         for (int i = 0; i < rewards.Count; i++)
         {
             DrawCard(i);
@@ -99,6 +92,10 @@ public class CardDrawModel : ViewModelBase
     {
         get { return this.openCount; }
         set { this.Set<int>(ref openCount, value, "OpenCount"); }
+    }
+    public ICommand CloseCardBagCommand
+    {
+        get { return this.closeCardBagCommand; }
     }
 
     public void Select(int index)

@@ -102,9 +102,9 @@ namespace LX
 
         private void Update()
         {
-            ApplicationContext context = ApplicationContext.GetApplicationContext();
-            ISession session = context.GetService<ISession>();
-            session.Update();
+            //ApplicationContext context = ApplicationContext.GetApplicationContext();
+            //ISession session = context.GetService<ISession>();
+            //session.Update();
         }
     }
 

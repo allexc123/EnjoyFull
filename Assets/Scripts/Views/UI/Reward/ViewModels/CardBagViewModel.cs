@@ -15,49 +15,32 @@ using UnityEngine;
 public class CardBagViewModel : ViewModelBase
 {
    
-    private InteractionRequest<CardDrawModel> openCardBagRequest;
+    private InteractionRequest<CardTurnModel> openCardBagRequest;
 
 
     private SimpleCommand openCardBag;
 
 
     private int countDown = 20;
-    private IAsyncResult result;
 
     public CardBagViewModel() : base()
     {
         
 
-        this.openCardBagRequest = new InteractionRequest<CardDrawModel>(this);
+        this.openCardBagRequest = new InteractionRequest<CardTurnModel>(this);
         this.openCardBag = new SimpleCommand(()=> 
         {
             this.openCardBag.Enabled = false;
-            CancelTask();
+            CardTurnModel cardDrawModel = new CardTurnModel();
+            this.openCardBagRequest.Raise(cardDrawModel);
         });
 
-        ApplicationContext context = Context.GetApplicationContext();
-        ITask task = context.GetService<ITask>();
-
         CountDown = 20;
-        this.result = task.Scheduled.ScheduleAtFixedRate(() =>
-        {
-            CountDown--;
-            if (countDown <= 0)
-            {
-               CancelTask();
-            }
 
-        }, 1000, 1000);
 
     }
-    private void CancelTask()
-    {
-        this.result.Cancel();
-        CardDrawModel cardDrawModel = new CardDrawModel();
-        this.openCardBagRequest.Raise(cardDrawModel);
-    }
 
-    public InteractionRequest<CardDrawModel> OpenCardBagRequest
+    public InteractionRequest<CardTurnModel> OpenCardBagRequest
     {
         get { return this.openCardBagRequest; }
     }

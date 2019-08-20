@@ -169,6 +169,8 @@ public class WheelWindow : Window
         //bindingSet.Bind(this.awardView).For(v => v.Awards).To(vm => vm.Awards).OneWay();
 
         bindingSet.Bind().For(v => v.OnOpenDrawDialog(null, null)).To(vm => vm.DrawDialogRequest);
+        bindingSet.Bind().For(v => v.OnShowPayDialog(null, null)).To(vm => vm.PayDialogRequest);
+
         bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
 
         bindingSet.Build();
@@ -251,12 +253,17 @@ public class WheelWindow : Window
         }
     }
 
-    private void OnShowPay(object sender, InteractionEventArgs args)
+    private void OnShowPayDialog(object sender, InteractionEventArgs args)
     {
-        IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
-        PayWindow payView = viewLocator.LoadWindow<PayWindow>(this.WindowManager, "UI/Pay");
-        payView.Create();
-        payView.Show();
+        PayDialogNotification notification = args.Context as PayDialogNotification;
+        var callback = args.Callback;
+        PayDialog.ShowPayDialog(notification.CountDown, (result) => {
+            notification.DialogResult = result;
+            if (callback != null) {
+                callback();
+            }
+        });
+
     }
 
     private void OnOpenDrawDialog(object sender, InteractionEventArgs args)
@@ -272,5 +279,6 @@ public class WheelWindow : Window
             }
         });
     }
+
 
 }

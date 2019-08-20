@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class CardBagWindow : Window
 {
     public Button openCardBag;
-    public Text countDown;
+    public CountDownView countDownView;
     protected override void OnCreate(IBundle bundle)
     {
         BindingSet<CardBagWindow, CardBagViewModel> bindingSet = this.CreateBindingSet<CardBagWindow, CardBagViewModel>();
@@ -20,7 +20,8 @@ public class CardBagWindow : Window
 
         bindingSet.Bind(this.openCardBag).For(v => v.onClick).To(vm => vm.OpenCardBag).OneWay();
 
-        bindingSet.Bind(this.countDown).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.CountDown)).OneWay();
+        bindingSet.Bind(this.countDownView).For(v => v.CountDown).To(vm => vm.CountDown).OneWay();
+        bindingSet.Bind(this.countDownView).For(v => v.OnFinish).To(vm => vm.OpenCardBag).OneWay();
 
         bindingSet.Build();
 
@@ -36,7 +37,7 @@ public class CardBagWindow : Window
     protected void OnOpenCardBagWindow(object sender, InteractionEventArgs args)
     {
         IUIViewLocator viewLocator = Context.GetApplicationContext().GetService<IUIViewLocator>();
-        CardDrawWindow cardDrawWindow = viewLocator.LoadWindow<CardDrawWindow>(this.WindowManager, "UI/CardDraw");
+        CardTurnWindow cardDrawWindow = viewLocator.LoadWindow<CardTurnWindow>(this.WindowManager, "UI/CardTurn");
         var cardDrawModel = args.Context;
         cardDrawWindow.SetDataContext(cardDrawModel);
         cardDrawWindow.Create();

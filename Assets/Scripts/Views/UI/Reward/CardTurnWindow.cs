@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class CardDrawWindow : Window
+public class CardTurnWindow : Window
 {
 
     public class CardClickedEvent : UnityEvent<int>
@@ -24,7 +24,7 @@ public class CardDrawWindow : Window
 
     public Transform content;
     public GameObject cardTemplate;
-    public Text countDown;
+    public CountDownView countDownView;
     public Text openCount;
 
     private ObservableList<CardViewModel> cards;
@@ -34,12 +34,14 @@ public class CardDrawWindow : Window
     
     protected override void OnCreate(IBundle bundle)
     {
-        BindingSet<CardDrawWindow, CardDrawModel> bindingSet = this.CreateBindingSet<CardDrawWindow, CardDrawModel>();
+        BindingSet<CardTurnWindow, CardTurnModel> bindingSet = this.CreateBindingSet<CardTurnWindow, CardTurnModel>();
         bindingSet.Bind().For(v => v.Cards).To(vm => vm.Cards).OneWay();
         bindingSet.Bind().For(v => v.OnSelectChanged).To(vm => vm.Select(0)).OneWay();
         bindingSet.Bind().For(v => v.OnOpenRewardWindow(null, null)).To(vm => vm.OpenRewardRequest);
 
-        bindingSet.Bind(this.countDown).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.CountDown)).OneWay();
+        bindingSet.Bind(this.countDownView).For(v => v.CountDown).To(vm => vm.CountDown).OneWay();
+        bindingSet.Bind(this.countDownView).For(v => v.OnFinish).To(vm => vm.CloseCardBagCommand).OneWay();
+
         bindingSet.Bind(this.openCount).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.OpenCount)).OneWay();
 
         bindingSet.Build();
@@ -113,8 +115,8 @@ public class CardDrawWindow : Window
 
         cardViewGo.SetActive(true);
 
-        CardView cardView = cardViewGo.GetComponent<CardView>();
-        cardView.SetDataContext(card);
+        //CardView cardView = cardViewGo.GetComponent<CardView>();
+        //cardView.SetDataContext(card);
        
     }
 

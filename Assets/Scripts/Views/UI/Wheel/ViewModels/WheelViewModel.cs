@@ -30,6 +30,8 @@ public class WheelViewModel : ViewModelBase
 
     private InteractionRequest<DrawDialogNotification> drawDialogRequest;
 
+    private InteractionRequest<PayDialogNotification> payDialogRequest;
+
     private InteractionRequest dismissRequest;
 
     private int wheelIndex = 0;
@@ -100,7 +102,26 @@ public class WheelViewModel : ViewModelBase
 
         this.dismissRequest = new InteractionRequest(this);
 
-        
+        this.payDialogRequest = new InteractionRequest<PayDialogNotification>(this);
+
+        PayDialogNotification payDialogNotification = new PayDialogNotification();
+        payDialogNotification.CountDown = 30;
+
+        Action<PayDialogNotification> payCallback = n =>
+        {
+            if (PayDialog.BUTTON_POSITIVE == n.DialogResult)
+            {
+                this.drawCommand.Execute(null);
+
+            }
+            else if (PayDialog.BUTTON_NEGATIVE == n.DialogResult)
+            {
+                dismissRequest.Raise();
+            }
+        };
+
+
+
 
         this.drawCommand = new SimpleCommand(()=> {
             drawCommand.Enabled = false;
@@ -126,7 +147,7 @@ public class WheelViewModel : ViewModelBase
                     Action<DrawDialogNotification> callback = n => {
                         if (DrawDialog.BUTTON_POSITIVE == n.DialogResult)
                         {
-                            wheelItemViewModel.ChangeIcon();
+                            this.payDialogRequest.Raise(payDialogNotification, payCallback);wheelItemViewModel.ChangeIcon();
 
                         }
                         else if (DrawDialog.BUTTON_NEGATIVE == n.DialogResult)
@@ -136,11 +157,15 @@ public class WheelViewModel : ViewModelBase
                     };
                     this.drawDialogRequest.Raise(drawDialogNotification, callback);
                 }
-               
+                else
+                {
+                    CardBagViewModel cardBagViewModel = new CardBagViewModel();
 
-                //CardBagViewModel cardBagViewModel = new CardBagViewModel();
+                    cardBagRequest.Raise(cardBagViewModel);
+                }
 
-                //cardBagRequest.Raise(cardBagViewModel);
+
+
 
             });
 
@@ -234,6 +259,10 @@ public class WheelViewModel : ViewModelBase
     public InteractionRequest<DrawDialogNotification> DrawDialogRequest
     {
         get { return this.drawDialogRequest; }
+    }
+    public InteractionRequest<PayDialogNotification> PayDialogRequest
+    {
+        get { return this.payDialogRequest; }
     }
 
     public IInteractionRequest DismissRequest

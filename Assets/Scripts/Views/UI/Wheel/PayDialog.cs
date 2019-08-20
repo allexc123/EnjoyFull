@@ -1,0 +1,106 @@
+﻿using Loxodon.Framework.Binding;
+using Loxodon.Framework.Contexts;
+using Loxodon.Framework.Execution;
+using Loxodon.Framework.Views;
+using Loxodon.Log;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+public class PayDialog : IDialog
+{
+    private static readonly ILog log = LogManager.GetLogger(typeof(PayDialog));
+
+    public const int BUTTON_POSITIVE = -1;
+    public const int BUTTON_NEGATIVE = -2;
+
+
+    private const string DEFAULT_VIEW_NAME = "UI/PayDialog";
+
+    private static string viewName;
+    public static string ViewName
+    {
+        get { return string.IsNullOrEmpty(viewName) ? DEFAULT_VIEW_NAME : viewName; }
+        set { viewName = value; }
+    }
+
+
+    private PayWindow window;
+    private PayViewModel viewModel;
+
+    public void Cancel()
+    {
+        this.viewModel.OnClick(BUTTON_NEGATIVE);
+    }
+
+    public void Show()
+    {
+        this.window.SetDataContext(viewModel);
+        this.window.Create();
+        this.window.Show();
+
+    }
+
+    public object WaitForClosed()
+    {
+        return Executors.WaitWhile(() => !this.viewModel.Closed);
+    }
+
+    
+
+    private PayDialog(PayWindow window, PayViewModel viewModel)
+    {
+        this.window = window;
+        this.viewModel = viewModel;
+    }
+
+    public static PayDialog ShowPayDialog(int countDown, Action<int> afterHideCallback)
+    {
+
+        PayViewModel viewModel = new PayViewModel(afterHideCallback);
+        ///viewModel.DrawCount = 20;
+
+        ApplicationContext context = Context.GetApplicationContext();
+        IUIViewLocator locator = context.GetService<IUIViewLocator>();
+        if (locator == null)
+        {
+            if (log.IsWarnEnabled)
+                log.Warn("Not found the \"IUIViewLocator\".");
+
+            throw new NotFoundException("Not found the \"IUIViewLocator\".");
+        }
+        PayWindow window = locator.LoadView<PayWindow>(ViewName);
+        if (window == null)
+        {
+            if (log.IsWarnEnabled)
+                log.WarnFormat("Not found the dialog window named \"{0}\".", viewName);
+
+            throw new NotFoundException(string.Format("Not found the dialog window named \"{0}\".", viewName));
+        }
+        PayDialog payDialog = new PayDialog(window, viewModel);
+        payDialog.Show();
+
+        viewModel.CountDown = countDown;
+        return payDialog;
+    }
+}
+
+public class PayDialogNotification
+{
+    private int dialogResult;
+    private int countDown;
+
+    public int DialogResult
+    {
+        get { return this.dialogResult; }
+        set { this.dialogResult = value; }
+    }
+
+    public int CountDown
+    {
+        get { return this.countDown; }
+        set { this.countDown = value; }
+    }
+}
