@@ -23,7 +23,7 @@ public class IdleWindow : Window
         IdleModel idleModel = new IdleModel();
         this.SetDataContext(idleModel);
         BindingSet<IdleWindow, IdleModel> bindingSet = this.CreateBindingSet<IdleWindow, IdleModel>();
-        bindingSet.Bind().For(v => v.OnOpenWheelWindow(null, null)).To(vm => vm.ShowWheelRequest);
+        bindingSet.Bind().For(v => v.OnOpenWheelWindow).To(vm => vm.ShowWheelRequest);
 
         bindingSet.Bind(this.showWheel).For(v => v.onClick).To(vm => vm.ShowWheel);
 

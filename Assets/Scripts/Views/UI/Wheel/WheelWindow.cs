@@ -154,7 +154,7 @@ public class WheelWindow : Window
 
         bindingSet.Bind().For(v => v.Items).To(vm => vm.Items).OneWay();
 
-        bindingSet.Bind(this).For(v => v.OnSelectChanged).To(vm => vm.Select(0)).OneWay();
+        bindingSet.Bind(this).For(v => v.OnSelectChanged).To<int>(vm => vm.Select).OneWay();
 
         bindingSet.Bind(this.drawButton).For(v=>v.onClick).To(vm=>vm.DrawCommand).OneWay();
 
@@ -162,21 +162,20 @@ public class WheelWindow : Window
 
         //bindingSet.Bind(this.hintImage).For(v => v.sprite).To(vm => vm.HintIcon).WithConversion("wheelConverter").OneWay();
 
-        bindingSet.Bind().For(v => v.WheelTurn(null, null)).To(vm => vm.WheelTurnRequest);
+        bindingSet.Bind().For(v => v.WheelTurn).To(vm => vm.WheelTurnRequest);
 
 
-        bindingSet.Bind().For(v => v.OnOpenCardBagWindow(null, null)).To(vm => vm.CardBagRequest);
+        bindingSet.Bind().For(v => v.OnOpenCardBagWindow).To(vm => vm.CardBagRequest);
         //bindingSet.Bind(this.awardView).For(v => v.Awards).To(vm => vm.Awards).OneWay();
 
-        bindingSet.Bind().For(v => v.OnOpenDrawDialog(null, null)).To(vm => vm.DrawDialogRequest);
-        bindingSet.Bind().For(v => v.OnShowPayDialog(null, null)).To(vm => vm.PayDialogRequest);
+        bindingSet.Bind().For(v => v.OnOpenDrawDialog).To(vm => vm.DrawDialogRequest);
+        bindingSet.Bind().For(v => v.OnShowPayDialog).To(vm => vm.PayDialogRequest);
 
-        bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
+        bindingSet.Bind().For(v => v.OnDismissRequest).To(vm => vm.DismissRequest);
 
         bindingSet.Build();
 
         this.rule.onClick.AddListener(RuleAnimation);
-
 
 
         WheelViewModel wheelViewModel = this.GetDataContext() as WheelViewModel;

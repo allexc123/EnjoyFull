@@ -36,8 +36,8 @@ public class CardTurnWindow : Window
     {
         BindingSet<CardTurnWindow, CardTurnModel> bindingSet = this.CreateBindingSet<CardTurnWindow, CardTurnModel>();
         bindingSet.Bind().For(v => v.Cards).To(vm => vm.Cards).OneWay();
-        bindingSet.Bind().For(v => v.OnSelectChanged).To(vm => vm.Select(0)).OneWay();
-        bindingSet.Bind().For(v => v.OnOpenRewardWindow(null, null)).To(vm => vm.OpenRewardRequest);
+        bindingSet.Bind().For(v => v.OnSelectChanged).To<int>(vm => vm.Select).OneWay();
+        bindingSet.Bind().For(v => v.OnOpenRewardWindow).To(vm => vm.OpenRewardRequest);
 
         bindingSet.Bind(this.countDownView).For(v => v.CountDown).To(vm => vm.CountDown).OneWay();
         bindingSet.Bind(this.countDownView).For(v => v.OnFinish).To(vm => vm.CloseCardBagCommand).OneWay();

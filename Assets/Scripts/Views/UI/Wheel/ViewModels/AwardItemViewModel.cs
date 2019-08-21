@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 public class AwardItemViewModel : ViewModelBase
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(AwardItemViewModel));
-
     private string name;
 
 

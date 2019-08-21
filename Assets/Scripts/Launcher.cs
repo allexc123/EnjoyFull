@@ -19,9 +19,9 @@ namespace LX
 {
     public class Launcher : MonoBehaviour
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(Launcher));
+        //private static readonly ILog log = LogManager.GetLogger(typeof(Launcher));
 
-         private List<Loading> list = new List<Loading>();
+         //private List<Loading> list = new List<Loading>();
 
         private void Awake()
         {
@@ -95,8 +95,8 @@ namespace LX
             //ISession session = context.GetService<ISession>();
             //session.Send(10001, -1, new Login() { DriveId = "default" });
 
-            ApplicationContext context = Context.GetApplicationContext();
-            ISession session = context.GetService<ISession>();
+            //ApplicationContext context = Context.GetApplicationContext();
+            //ISession session = context.GetService<ISession>();
             //session.Connect("127.0.0.1", 10001);
         }
 

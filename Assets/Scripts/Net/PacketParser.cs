@@ -27,9 +27,9 @@ public static class Packet
 
 public class PacketParser
 {
-    private int opcode;
-    private long pid;
-    private int packetSize;
+    public int opcode;
+    public long pid;
+    public int packetSize;
     private readonly CircularBuffer buffer;
 
     private ParserState state;

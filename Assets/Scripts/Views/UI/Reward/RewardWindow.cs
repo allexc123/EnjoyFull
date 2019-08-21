@@ -48,13 +48,13 @@ public class RewardWindow : Window
 
         bindingSet.Bind(this.phoneNumber).For(v => v.text, v => v.onEndEdit).To(vm => vm.PhoneNumber).TwoWay();
 
-        bindingSet.Bind().For(v => v.OnOpenAlert(null, null)).To(vm => vm.AlertDialogRequest);
+        bindingSet.Bind().For(v => v.OnOpenAlert).To(vm => vm.AlertDialogRequest);
 
         bindingSet.Bind(this.receiveReward).For(v => v.onClick).To(vm => vm.ReceiveReward).OneWay();
 
         bindingSet.Bind(this.terminate).For(v => v.onClick).To(vm => vm.Terminate).OneWay();
 
-        bindingSet.Bind().For(v => v.OnInteractionFinished(null, null)).To(vm => vm.InteractionFinished);
+        bindingSet.Bind().For(v => v.OnInteractionFinished).To(vm => vm.InteractionFinished);
 
         bindingSet.Bind(this.countDown).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.CountDown)).TwoWay();
 

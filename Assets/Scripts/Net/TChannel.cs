@@ -27,7 +27,7 @@ class TChannel : AbstractChannel
 
     private readonly PacketParser parser;
 
-    private bool isSending;
+    //private bool isSending;
 
     private bool isRecving;
 
@@ -62,7 +62,7 @@ class TChannel : AbstractChannel
         this.Address = new IPEndPoint(IPAddress.Parse(host), port);
 
         this.isConnected = false;
-        this.isSending = false;
+        //this.isSending = false;
     }
     public override void Dispose()
     {
@@ -288,11 +288,11 @@ class TChannel : AbstractChannel
         // 没有数据需要发送
         if (this.sendBuffer.Length == 0)
         {
-            this.isSending = false;
+            //this.isSending = false;
             return;
         }
 
-        this.isSending = true;
+        //this.isSending = true;
 
         int sendSize = this.sendBuffer.ChunkSize - this.sendBuffer.FirstIndex;
         if (sendSize > this.sendBuffer.Length)

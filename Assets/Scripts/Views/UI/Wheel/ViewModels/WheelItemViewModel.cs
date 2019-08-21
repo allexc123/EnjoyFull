@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 public class WheelItemViewModel : ViewModelBase
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(WheelItemViewModel));
     private string icon;
     private bool showHand;
 

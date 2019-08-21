@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 
 public class Session : ISession
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(TChannel));
-
+    //private static readonly ILog log = LogManager.GetLogger(typeof(TChannel));
     public const string NET_ALERT = "net";
     private long pid;
     public long Pid
@@ -21,11 +20,11 @@ public class Session : ISession
     }
     private AbstractChannel channel;
 
-    private ThreadScheduledExecutor scheduled;
+    //private ThreadScheduledExecutor scheduled;
 
     public Session()
     {
-        this.scheduled = new ThreadScheduledExecutor();
+        //this.scheduled = new ThreadScheduledExecutor();
     }
 
     public void Connect(string host, int port)

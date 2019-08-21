@@ -12,8 +12,7 @@ using UnityEngine.UI;
 
 public class StartupWindow : Window
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(StartupWindow));
-
+   
     //public Text progressBarText;
     public Slider progressBarSlider;
     //public Text tipText;
@@ -27,8 +26,8 @@ public class StartupWindow : Window
 
         /* databinding, Bound to the ViewModel. */
         BindingSet<StartupWindow, StartupViewModel> bindingSet = this.CreateBindingSet(viewModel);
-        bindingSet.Bind().For(v => v.OnOpenIdleWindow(null, null)).To(vm => vm.IdleRequest);
-        bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
+        bindingSet.Bind().For(v => v.OnOpenIdleWindow).To(vm => vm.IdleRequest);
+        bindingSet.Bind().For(v => v.OnDismissRequest).To(vm => vm.DismissRequest);
 
 
         bindingSet.Bind(this.progressBarSlider).For("value", "onValueChanged").To("ProgressBar.Progress").TwoWay();

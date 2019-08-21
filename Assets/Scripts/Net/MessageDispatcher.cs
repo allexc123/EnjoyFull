@@ -86,7 +86,8 @@ public class MessageDispatcher : IMessageDispatcher
     {
         memoryStream.Seek(0, SeekOrigin.Begin);
         int opcode = BitConverter.ToInt32(memoryStream.GetBuffer(), Packet.OpcodeIndex);
-        long pid = BitConverter.ToInt64(memoryStream.GetBuffer(), Packet.IdIndex);
+        //long pid = 
+        BitConverter.ToInt64(memoryStream.GetBuffer(), Packet.IdIndex);
 
         memoryStream.Seek(Packet.MessageIndex, SeekOrigin.Begin);
 

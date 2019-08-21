@@ -15,7 +15,6 @@ using UnityEngine;
 
 public class WheelViewModel : ViewModelBase
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(WheelViewModel));
 
     private readonly ObservableList<WheelItemViewModel> items = new ObservableList<WheelItemViewModel>();
 

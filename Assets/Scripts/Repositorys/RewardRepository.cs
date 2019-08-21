@@ -53,6 +53,7 @@ public class RewardRepository : IRewardRepository
         {
             idxs.Add(i);
         }
+        qrCode = "";
     }
 
     public virtual IAsyncResult<List<Reward>> Get()

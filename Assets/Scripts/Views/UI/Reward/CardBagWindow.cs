@@ -16,7 +16,7 @@ public class CardBagWindow : Window
     protected override void OnCreate(IBundle bundle)
     {
         BindingSet<CardBagWindow, CardBagViewModel> bindingSet = this.CreateBindingSet<CardBagWindow, CardBagViewModel>();
-        bindingSet.Bind().For(v => v.OnOpenCardBagWindow(null, null)).To(vm => vm.OpenCardBagRequest);
+        bindingSet.Bind().For(v => v.OnOpenCardBagWindow).To(vm => vm.OpenCardBagRequest);
 
         bindingSet.Bind(this.openCardBag).For(v => v.onClick).To(vm => vm.OpenCardBag).OneWay();
 

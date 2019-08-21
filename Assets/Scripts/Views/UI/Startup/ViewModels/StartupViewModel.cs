@@ -14,12 +14,9 @@ using UnityEngine;
 
 public class StartupViewModel : ViewModelBase
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(StartupViewModel));
-
+   
     private ProgressBar progressBar = new ProgressBar();
     private SimpleCommand command;
-
-    private InteractionRequest<ToastNotification> toastRequest;
 
     private InteractionRequest dismissRequest;
     private InteractionRequest idleRequest;
@@ -32,9 +29,7 @@ public class StartupViewModel : ViewModelBase
     public StartupViewModel(IMessenger messenger) : base(messenger)
     {
 
-        this.toastRequest = new InteractionRequest<ToastNotification>(this);
-
-        ApplicationContext context = Context.GetApplicationContext();
+        //ApplicationContext context = Context.GetApplicationContext();
 
         this.dismissRequest = new InteractionRequest(this);
         //this.wheelRequest = new InteractionRequest<CardBagViewModel>(this);
@@ -46,7 +41,7 @@ public class StartupViewModel : ViewModelBase
         this.command = new SimpleCommand(()=> {
             this.command.Enabled = false;
             //dismissRequest.Raise();
-            ISession session = context.GetService<ISession>();
+            //ISession session = context.GetService<ISession>();
             //session.Connect("127.0.0.1", 10001);
 
             //this.wheelRequest.Raise(cardDrawViewModel);

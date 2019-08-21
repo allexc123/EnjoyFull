@@ -12,9 +12,6 @@ using UnityEngine.UI;
 
 public class PayWindow : Window
 {
-
-    private static readonly ILog log = LogManager.GetLogger(typeof(PayWindow));
-
     public CountDownView countDownView;
     public Button mask;
 
@@ -27,7 +24,7 @@ public class PayWindow : Window
         bindingSet.Bind(this.countDownView).For(v => v.OnFinish).To(vm => vm.CancelCommand).OneWay();
         bindingSet.Bind(this.countDownView).For(v => v.CountDown).To(vm => vm.CountDown).OneWay();
 
-        bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
+        bindingSet.Bind().For(v => v.OnDismissRequest).To(vm => vm.DismissRequest);
 
         bindingSet.Build();
     }

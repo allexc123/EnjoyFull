@@ -16,7 +16,7 @@ public class AwardViewModel : ViewModelBase
 
     public void LoadAward()
     {
-        Awards.Clear();
+        awards.Clear();
         ApplicationContext context = Context.GetApplicationContext();
 
         IRewardRepository rewardRepository = context.GetService<IRewardRepository>();
@@ -39,7 +39,7 @@ public class AwardViewModel : ViewModelBase
                 awardItemViewModel.Name = $"<color=#00FF00>{award.Name}  {award.Count}</color>";
             }
 
-            this.Awards.Add(awardItemViewModel);
+            this.awards.Add(awardItemViewModel);
         }
 
     }

@@ -26,7 +26,7 @@ public class CardView : UIView
         bindingSet.Bind(this.frontImage).For(v => v.sprite).To(vm => vm.FrontIcon).WithConversion("spriteConverter").OneWay();
         bindingSet.Bind(this.backImage).For(v => v.sprite).To(vm => vm.BackIcon).WithConversion("spriteConverter").OneWay();
 
-        bindingSet.Bind().For(v => v.OnClick(null, null)).To(vm => vm.ClickedRequest);
+        bindingSet.Bind().For(v => v.OnClick).To(vm => vm.ClickedRequest);
 
         bindingSet.Build();
 

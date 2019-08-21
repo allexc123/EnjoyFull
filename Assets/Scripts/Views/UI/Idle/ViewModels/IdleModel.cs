@@ -15,7 +15,7 @@ public class IdleModel : ViewModelBase
 
     private string icon;
 
-    private IAsyncResult result;
+    //private IAsyncResult result;
 
     private int index = 0;
 
@@ -43,7 +43,8 @@ public class IdleModel : ViewModelBase
         ApplicationContext context = Context.GetApplicationContext();
         ITask task = context.GetService<ITask>();
 
-        this.result = task.Scheduled.ScheduleAtFixedRate(() =>
+        //this.result = 
+        task.Scheduled.ScheduleAtFixedRate(() =>
         {
             index++;
             if (index>= icons.Count)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 #if UNITY_IOS || ENABLE_IL2CPP
 using Loxodon.Framework.Binding.Expressions;
 #endif
@@ -48,7 +49,33 @@ namespace Loxodon.Framework.Binding.Paths
                 return path;
             }
 
-            throw new ArgumentException("Invalid argument", "expression");
+            throw new ArgumentException(string.Format("Invalid expression:{0}", expression));
+        }
+
+        private MethodInfo GetDelegateMethodInfo(MethodCallExpression expression)
+        {
+            var target = expression.Object;
+            var arguments = expression.Arguments;
+            if (target == null)
+            {
+                foreach (var expr in arguments)
+                {
+                    if (!(expr is ConstantExpression))
+                        continue;
+
+                    var value = (expr as ConstantExpression).Value;
+                    if (value is MethodInfo)
+                        return (MethodInfo)value;
+                }
+                return null;
+            }
+            else if (target is ConstantExpression)
+            {
+                var value = (target as ConstantExpression).Value;
+                if (value is MethodInfo)
+                    return (MethodInfo)value;
+            }
+            return null;
         }
 
         private void Parse(Expression expression, Path path)
@@ -97,9 +124,13 @@ namespace Loxodon.Framework.Binding.Paths
                     return;
                 }
 
-                if (methodCall.Method.Name.Equals("CreateDelegate") && methodCall.Arguments.Count == 3)
+                //Delegate.CreateDelegate(Type type, object firstArgument, MethodInfo method)
+                if (methodCall.Method.Name.Equals("CreateDelegate"))
                 {
-                    var info = (MethodInfo)(methodCall.Arguments[2] as ConstantExpression).Value;
+                    var info = this.GetDelegateMethodInfo(methodCall);
+                    if (info == null)
+                        throw new ArgumentException(string.Format("Invalid expression:{0}", expression));
+
                     if (info.IsStatic)
                     {
                         path.Prepend(new MemberNode(info));
@@ -130,7 +161,7 @@ namespace Loxodon.Framework.Binding.Paths
                     }
                 }
 
-                throw new NotSupportedException("Expressions of type " + expression.Type + " are not supported.");
+                throw new ArgumentException(string.Format("Invalid expression:{0}", expression));
             }
 
             if (expression is BinaryExpression)
@@ -157,7 +188,8 @@ namespace Loxodon.Framework.Binding.Paths
                         this.Parse(left, path);
                     return;
                 }
-                throw new NotSupportedException("Expressions of type " + expression.Type + " are not supported.");
+
+                throw new ArgumentException(string.Format("Invalid expression:{0}", expression));
             }
         }
 
@@ -210,7 +242,7 @@ namespace Loxodon.Framework.Binding.Paths
                 return path;
             }
 
-            throw new ArgumentException("Invalid argument", "expression");
+            throw new ArgumentException(string.Format("Invalid expression:{0}", expression));
         }
 
         public virtual Path ParseStaticPath(string pathText)
@@ -265,12 +297,27 @@ namespace Loxodon.Framework.Binding.Paths
             if (method != null)
                 return method.Method.Name;
 
+            //Delegate.CreateDelegate(Type type, object firstArgument, MethodInfo method)
+            var unary = expression.Body as UnaryExpression;
+            if (unary != null && unary.NodeType == ExpressionType.Convert)
+            {
+                MethodCallExpression methodCall = (MethodCallExpression)unary.Operand;
+                if (methodCall.Method.Name.Equals("CreateDelegate"))
+                {
+                    var info = this.GetDelegateMethodInfo(methodCall);
+                    if (info != null)
+                        return info.Name;
+                }
+
+                throw new ArgumentException(string.Format("Invalid expression:{0}", expression));
+            }
+
             var body = expression.Body as MemberExpression;
             if (body == null)
-                throw new ArgumentException("Invalid argument", "expression");
+                throw new ArgumentException(string.Format("Invalid expression:{0}", expression));
 
             if (!(body.Expression is ParameterExpression))
-                throw new NotSupportedException("Invalid argument");
+                throw new ArgumentException(string.Format("Invalid expression:{0}", expression));
 
             return body.Member.Name;
         }

@@ -37,7 +37,8 @@ namespace Loxodon.Framework.Views
             AsyncResult<int> result = new AsyncResult<int>();
             try
             {
-                var dialog = AlertDialog.ShowMessage(message, title, confirmButtonText, neutralButtonText, cancelButtonText, canceledOnTouchOutside, (which) => { result.SetResult(which); });
+                //var dialog = 
+                AlertDialog.ShowMessage(message, title, confirmButtonText, neutralButtonText, cancelButtonText, canceledOnTouchOutside, (which) => { result.SetResult(which); });
             }
             catch (Exception e)
             {

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 public class CardTurnModel : ViewModelBase
 {
 
-    private static readonly ILog log = LogManager.GetLogger(typeof(CardBagViewModel));
+    //private static readonly ILog log = LogManager.GetLogger(typeof(CardBagViewModel));
 
     private readonly ObservableList<CardViewModel> cards = new ObservableList<CardViewModel>();
 

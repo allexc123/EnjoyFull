@@ -40,7 +40,7 @@ public class DrawDialogWindow : Window
         bindingSet.Bind(this.money).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.Money)).OneWay();
         bindingSet.Bind(this.drawCount).For(v => v.text).ToExpression(vm => string.Format("{0}", vm.DrawCount)).OneWay();
 
-        bindingSet.Bind().For(v => v.OnDismissRequest(null, null)).To(vm => vm.DismissRequest);
+        bindingSet.Bind().For(v => v.OnDismissRequest).To(vm => vm.DismissRequest);
 
         bindingSet.Build();
     }
