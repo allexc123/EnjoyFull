@@ -1,4 +1,28 @@
-﻿using System;
+﻿/*
+ * MIT License
+ *
+ * Copyright (c) 2018 Clark Yang
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of 
+ * this software and associated documentation files (the "Software"), to deal in 
+ * the Software without restriction, including without limitation the rights to 
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+ * of the Software, and to permit persons to whom the Software is furnished to do so, 
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all 
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+ * SOFTWARE.
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -246,7 +270,7 @@ namespace Loxodon.Framework.Binding.Reflection
             IProxyFieldInfo info;
             if (this.fields.TryGetValue(name, out info))
                 return info;
-            
+
             FieldInfo fieldInfo = this.type.GetField(name);
             if (fieldInfo != null && fieldInfo.DeclaringType.Equals(type))
             {
@@ -390,7 +414,11 @@ namespace Loxodon.Framework.Binding.Reflection
             if (info != null)
                 return info;
 
+#if NETFX_CORE
+            MethodInfo methodInfo = this.type.GetMethod(name, flags);
+#else
             MethodInfo methodInfo = this.type.GetMethod(name, flags, null, parameterTypes, null);
+#endif
             if (methodInfo != null && methodInfo.DeclaringType.Equals(type))
             {
                 return this.CreateProxyMethodInfo(methodInfo);
