@@ -79,7 +79,7 @@ namespace Loxodon.Framework.Net.Http
 #if UNITY_2018_1_OR_NEWER
                 if (www.isNetworkError)
 #else
-                if (www.isError)
+                if (www.isNetworkError)
 #endif
                 {
                     promise.SetException(www.error);
@@ -184,7 +184,7 @@ namespace Loxodon.Framework.Net.Http
 #if UNITY_2018_1_OR_NEWER
                         if (_www.isNetworkError)
 #else
-                        if (_www.isError)
+                        if (_www.isNetworkError)
 #endif
                         {
                             promise.SetException(new Exception(_www.error));
